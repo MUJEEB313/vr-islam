@@ -55,7 +55,7 @@ export interface Collection {
   arabic?: string;
   summary: string;
   videos: string[];
-  accent: "gold" | "emerald" | "crimson" | "night";
+  accent: "azure" | "emerald" | "crimson" | "night";
 }
 
 export interface Occasion {

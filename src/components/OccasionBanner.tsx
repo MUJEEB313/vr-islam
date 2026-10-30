@@ -7,10 +7,10 @@ import { formatHijri, isMourningSeason, toHijri, upcomingOccasions, type HijriDa
 import { Icon } from "./Icons";
 
 const KIND_STYLE: Record<UpcomingOccasion["kind"], string> = {
-  shahadat: "from-[#2a0a0e] to-[#5a1520] ring-crimson/40",
-  commemoration: "from-[#0b0b10] to-[#2a2a36] ring-white/15",
+  shahadat: "from-[#1c0a18] to-[#4d1320] ring-crimson/40",
+  commemoration: "from-[#020c1f] to-[#14284d] ring-white/15",
   wiladat: "from-[#0b2a1d] to-[#14563a] ring-emerald/40",
-  eid: "from-[#2d2208] to-[#6a4c14] ring-gold/40",
+  eid: "from-[#00193f] to-[#0a4a94] ring-brand-bright/40",
 };
 
 /**
@@ -46,14 +46,14 @@ export function OccasionBanner() {
             <p className="text-xs tracking-[0.18em] text-white/60 uppercase">Today · {formatHijri(today)}</p>
             {next ? (
               <p className="font-medium">
-                <span className="text-[var(--gold-strong)]">{when}:</span> {next.title}
+                <span className="text-brand-bright">{when}:</span> {next.title}
               </p>
             ) : (
               <p className="font-medium">{mourning ? "The season of mourning for Imam Husayn (a.s.)" : "Visit the shrines of the Ahl al-Bayt (a.s.) today"}</p>
             )}
           </div>
         </div>
-        <div className="flex gap-2 sm:ml-auto">
+        <div className="flex flex-wrap gap-x-2 sm:ml-auto sm:flex-nowrap">
           {next && (
             <Link href={next.href} className="flex h-11 items-center gap-1.5 rounded-full bg-white/15 px-4 text-sm font-medium backdrop-blur transition hover:bg-white/25">
               Watch related <Icon name="arrowRight" size={16} />

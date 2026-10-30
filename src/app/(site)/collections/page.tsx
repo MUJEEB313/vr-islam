@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 export default function CollectionsPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6">
-      <p className="text-xs font-semibold tracking-[0.2em] text-gold-ink uppercase">Curated journeys</p>
-      <h1 className="font-display mt-1 text-4xl font-semibold sm:text-5xl">Collections</h1>
+    <div className="wrap pt-8">
+      <p className="text-xs font-semibold tracking-[0.2em] text-brand-ink uppercase">Curated journeys</p>
+      <h1 className="t-page mt-1">Collections</h1>
       <p className="mt-3 max-w-2xl text-muted">Playlists that take you through a pilgrimage from start to finish. Watch them in order, or jump to any stop.</p>
-      <div className="mt-10 grid gap-5 md:grid-cols-2">
+      <div className="mt-10 grid-split">
         {collections.map((c) => (
           <CollectionCard key={c.slug} collection={c} />
         ))}

@@ -7,9 +7,9 @@ export function SiteFooter() {
   return (
     <footer className="relative mt-24 border-t border-line bg-surface">
       <div className="bg-girih pointer-events-none absolute inset-0 opacity-[0.04]" />
-      <div className="relative mx-auto max-w-7xl px-4 pt-14 pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:px-6 lg:pb-14">
-        <p className="arabic mb-10 text-center text-2xl text-gold-ink sm:text-3xl">اللّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّد</p>
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="wrap relative pt-14 pb-[calc(5.5rem+env(safe-area-inset-bottom))] short:pb-8 lg:pb-14 fold-h:pb-24">
+        <p className="arabic mb-10 text-center text-2xl text-brand-ink sm:text-3xl">اللّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّد</p>
+        <div className="fold-cols grid grid-cols-[repeat(auto-fit,minmax(min(100%,13rem),1fr))] gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">{site.tagline}. Free and open to everyone, in your browser or VR headset.</p>
@@ -39,7 +39,7 @@ export function SiteFooter() {
 function FooterCol({ title, links }: { title: string; links: { href: string; label: string }[] }) {
   return (
     <div>
-      <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] text-gold-ink uppercase">{title}</h2>
+      <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] text-brand-ink uppercase">{title}</h2>
       <ul className="space-y-2">
         {links.map((l) => (
           <li key={l.href}>

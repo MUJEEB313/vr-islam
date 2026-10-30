@@ -28,23 +28,23 @@ export function SavedLibrary() {
 
   return (
     <>
-      <div role="tablist" aria-label="Saved lists" className="mt-8 flex gap-2 overflow-x-auto">
+      <div role="tablist" aria-label="Saved lists" className="no-scrollbar bleed mt-8 flex gap-2 overflow-x-auto">
         {TABS.map((t) => (
           <button
             key={t.id}
             role="tab"
             aria-selected={tab === t.id}
             onClick={() => setTab(t.id)}
-            className={`flex h-11 shrink-0 items-center gap-2 rounded-full px-4 sm:h-10 text-sm font-medium transition ${tab === t.id ? "bg-fg text-bg" : "border border-line bg-surface text-muted hover:text-fg"}`}
+            className={`flex h-11 shrink-0 items-center gap-2 rounded-full px-4 text-sm pointer-fine:h-10 font-medium transition ${tab === t.id ? "bg-brand text-white" : "border border-line bg-surface text-muted hover:text-fg"}`}
           >
             {t.label}
-            <span className={`rounded-full px-1.5 text-xs ${tab === t.id ? "bg-bg/20" : "bg-surface-2"}`}>{counts[t.id]}</span>
+            <span className={`rounded-full px-1.5 text-xs ${tab === t.id ? "bg-white/20" : "bg-surface-2"}`}>{counts[t.id]}</span>
           </button>
         ))}
       </div>
       <div role="tabpanel" className="mt-8">
         {list.length ? (
-          <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid-cards">
             {list.map((v) => {
               const p = progress[v.slug];
               return <VideoCard key={v.slug} video={v} progress={tab === "continue" && p ? p.t / p.d : undefined} />;
@@ -52,13 +52,13 @@ export function SavedLibrary() {
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed border-line-strong p-12 text-center">
-            <p className="font-display text-2xl">Nothing here yet</p>
+            <p className="t-card">Nothing here yet</p>
             <p className="mt-2 text-sm text-muted">
               {tab === "continue"
                 ? "Videos you start watching will appear here so you can pick up where you left off."
                 : "Tap the heart or clock on any video to keep it here."}
             </p>
-            <Link href="/videos" className="mt-5 inline-flex h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-black">
+            <Link href="/videos" className="mt-5 inline-flex h-10 items-center rounded-full bg-brand px-5 text-sm font-semibold text-white">
               Browse the library
             </Link>
           </div>

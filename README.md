@@ -1,4 +1,4 @@
-# Ziyarat VR
+# VR Islam
 
 A 360° / VR video library for Shia Islamic content: virtual ziyarat of the holy shrines, the Arbaeen walk, Muharram majalis and historical reconstructions. Videos play in the browser on desktop and phones (drag or gyroscope) and in VR headsets via WebXR (Meta Quest, Vision Pro, Pico).
 
@@ -15,7 +15,7 @@ npx serve out      # preview the production build
 
 ## Deployment
 
-Every push to `main` is built and published to **GitHub Pages** by `.github/workflows/deploy.yml`. The workflow sets `NEXT_PUBLIC_BASE_PATH` (e.g. `/ziyarat-vr`) and `NEXT_PUBLIC_SITE_ORIGIN` automatically from the repository's Pages settings. With a custom domain the base path becomes empty and nothing else needs to change.
+Every push to `main` is built and published to **GitHub Pages** by `.github/workflows/deploy.yml`. The workflow sets `NEXT_PUBLIC_BASE_PATH` (e.g. `/vr-islam`) and `NEXT_PUBLIC_SITE_ORIGIN` automatically from the repository's Pages settings. With a custom domain the base path becomes empty and nothing else needs to change.
 
 > If the build fails with `Failed to fetch … from Google Fonts` / `ETIMEDOUT`, your network has broken IPv6. Run
 > `NODE_OPTIONS=--dns-result-order=ipv4first npm run build`.
@@ -56,6 +56,14 @@ Before launch, set `contactEmail` in `src/lib/site.ts`.
 - ⌘K search, dark/light themes, SEO metadata, `VideoObject` JSON-LD, sitemap and an Open Graph image.
 - **Mobile-first**: bottom tab bar, 44px touch targets, safe-area support for notched phones, full-screen search, an iPhone full-screen fallback with landscape lock, gyroscope look-around, and installation to the home screen (web app manifest).
 - **Light on data**: card thumbnails (~30 KB), only the font weights in use, no prefetching from cards, and the home page's live 3D scene loads only once the page is idle (never on data-saver or 2G).
+
+## Brand
+
+The logo source is in `logo/`. `node scripts/make-brand.mjs` regenerates the transparent logo variants in `public/brand/` and the app icons. Colours and fluid type live in `src/app/globals.css`.
+
+## Screens
+
+Layouts are fluid rather than tied to a few breakpoints: grids choose their own column count, type scales with the screen, and components respond to their own width (container queries). Sizing of tap targets follows the pointer type, not the width, so touch tablets get touch-sized controls. Phones on their side get a compact layout (`short:` variant), and foldables/dual screens use the Viewport Segments API (`fold-h:` / `fold-v:` variants and the `@media` block in `globals.css`) so nothing sits on the hinge.
 
 ## Placeholder scenes & posters
 

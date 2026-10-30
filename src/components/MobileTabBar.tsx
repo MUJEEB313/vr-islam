@@ -19,7 +19,7 @@ export function MobileTabBar() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden short:hidden fold-h:left-[env(viewport-segment-left_1_0)] fold-h:block"
     >
       <ul className="mx-auto flex max-w-lg px-[max(0.5rem,env(safe-area-inset-left))]">
         {TABS.map((t) => {
@@ -29,9 +29,9 @@ export function MobileTabBar() {
               <Link
                 href={t.href}
                 aria-current={on ? "page" : undefined}
-                className={`flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium transition ${on ? "text-gold-ink" : "text-muted active:text-fg"}`}
+                className={`flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium transition ${on ? "text-brand-ink" : "text-muted active:text-fg"}`}
               >
-                <span className={`grid h-7 w-12 place-items-center rounded-full transition ${on ? "bg-gold/15" : ""}`}>
+                <span className={`grid h-7 w-12 place-items-center rounded-full transition ${on ? "bg-brand-ink/15" : ""}`}>
                   <Icon name={t.icon} size={21} fill={on && t.icon === "heart" ? "currentColor" : "none"} />
                 </span>
                 {t.label}

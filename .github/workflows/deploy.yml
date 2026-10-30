@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          # e.g. "/ziyarat-vr" for https://<user>.github.io/ziyarat-vr
+          # e.g. "/vr-islam" for https://<user>.github.io/vr-islam
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           NEXT_PUBLIC_SITE_ORIGIN: ${{ steps.pages.outputs.origin }}
       - uses: actions/upload-pages-artifact@v3

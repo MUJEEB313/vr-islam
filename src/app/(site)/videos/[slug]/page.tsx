@@ -48,15 +48,17 @@ export default async function WatchPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      <div className="mx-auto max-w-[1600px] px-0 sm:px-4">
-        <div className="aspect-square max-h-[80vh] w-full sm:aspect-video overflow-hidden bg-black sm:rounded-3xl sm:ring-1 sm:ring-line">
+      <div className="watch">
+      <div className="watch-stage wrap-wide px-0! sm:px-2!">
+        <div className="watch-frame overflow-hidden bg-black sm:rounded-3xl sm:ring-1 sm:ring-line short:rounded-none fold-h:rounded-none">
           <VideoPlayer video={video} className="h-full w-full" />
         </div>
       </div>
 
-      <div className="mx-auto mt-6 grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="watch-details @container wrap mt-6">
+      <div className="grid gap-10 @4xl:grid-cols-[minmax(0,1fr)_360px]">
         <article>
-          <nav aria-label="Breadcrumb" className="mb-3 flex flex-wrap items-center gap-x-1.5 text-xs text-muted [&_a]:inline-flex [&_a]:h-10 [&_a]:items-center sm:[&_a]:h-8">
+          <nav aria-label="Breadcrumb" className="mb-3 flex flex-wrap items-center gap-x-1.5 text-xs text-muted [&_a]:inline-flex [&_a]:h-10 [&_a]:items-center pointer-fine:[&_a]:h-8">
             <Link href="/videos" className="hover:text-fg">
               Library
             </Link>
@@ -73,9 +75,9 @@ export default async function WatchPage({ params }: Props) {
               </>
             )}
           </nav>
-          <h1 className="font-display text-3xl leading-tight font-semibold text-balance sm:text-4xl">{video.title}</h1>
+          <h1 className="t-page">{video.title}</h1>
           <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
-            <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-xs font-semibold text-gold-ink">{formatLabel[video.format]}</span>
+            <span className="rounded-full bg-brand-ink/15 px-2.5 py-0.5 text-xs font-semibold text-brand-ink">{formatLabel[video.format]}</span>
             <span className="flex items-center gap-1.5">
               <Icon name="clock" size={16} /> {formatDuration(video.duration)}
             </span>
@@ -100,13 +102,13 @@ export default async function WatchPage({ params }: Props) {
             <section className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface">
               <div className="flex flex-col gap-6 p-6 sm:flex-row">
                 <div className="flex-1">
-                  <p className="arabic text-2xl text-gold-ink">{shrine.arabic}</p>
-                  <h2 className="font-display mt-1 text-2xl font-semibold">{shrine.name}</h2>
+                  <p className="arabic text-2xl text-brand-ink">{shrine.arabic}</p>
+                  <h2 className="t-card mt-1">{shrine.name}</h2>
                   <p className="mt-1 text-sm text-muted">
                     {shrine.city}, {shrine.country}
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-fg/85">{shrine.summary}</p>
-                  <Link href={`/shrines/${shrine.slug}`} className="mt-2 inline-flex h-11 items-center gap-1.5 text-sm font-medium text-gold-ink hover:underline">
+                  <Link href={`/shrines/${shrine.slug}`} className="mt-2 inline-flex h-11 items-center gap-1.5 text-sm font-medium text-brand-ink hover:underline">
                     About the shrine <Icon name="arrowRight" size={16} />
                   </Link>
                 </div>
@@ -115,7 +117,7 @@ export default async function WatchPage({ params }: Props) {
                   <ul className="space-y-1.5">
                     {shrine.ziyarat.map((z) => (
                       <li key={z} className="flex items-start gap-2 text-sm">
-                        <span className="mt-1.5 size-1.5 shrink-0 rotate-45 bg-gold" />
+                        <span className="mt-1.5 size-1.5 shrink-0 rotate-45 bg-brand" />
                         {z}
                       </li>
                     ))}
@@ -137,17 +139,17 @@ export default async function WatchPage({ params }: Props) {
 
         <aside aria-label="Up next">
           <h2 className="mb-4 text-xs font-semibold tracking-[0.18em] text-muted uppercase">Up next</h2>
-          <ul className="space-y-4">
+          <ul className="grid-list">
             {related.map((v) => (
               <li key={v.slug}>
                 <Link href={`/videos/${v.slug}`} prefetch={false} className="group flex gap-3">
-                  <span className="relative aspect-video w-40 shrink-0 overflow-hidden rounded-xl bg-surface-2 ring-1 ring-line">
+                  <span className="relative aspect-video w-[42%] max-w-40 shrink-0 overflow-hidden rounded-xl bg-surface-2 ring-1 ring-line">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={asset(thumbOf(v))} alt="" loading="lazy" className="h-full w-full object-cover transition group-hover:scale-105" />
                     <span className="absolute right-1.5 bottom-1.5 rounded bg-black/70 px-1 text-[11px] text-white tabular-nums">{formatDuration(v.duration)}</span>
                   </span>
                   <span className="min-w-0">
-                    <span className="line-clamp-2 text-sm leading-snug font-medium group-hover:text-gold-ink">{v.title}</span>
+                    <span className="line-clamp-2 text-sm leading-snug font-medium group-hover:text-brand-ink">{v.title}</span>
                     <span className="mt-1 block text-xs text-muted">
                       {getShrine(v.shrine)?.city ?? categoryLabel(v.category)} · {formatViews(v.views)} views
                     </span>
@@ -157,6 +159,8 @@ export default async function WatchPage({ params }: Props) {
             ))}
           </ul>
         </aside>
+      </div>
+      </div>
       </div>
     </>
   );

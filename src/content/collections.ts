@@ -14,7 +14,7 @@ export const collections: Collection[] = [
       "golden-domes-of-kadhimiya",
       "samarra-the-restored-dome",
     ],
-    accent: "gold",
+    accent: "azure",
   },
   {
     slug: "arbaeen",

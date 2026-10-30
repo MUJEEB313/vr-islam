@@ -23,7 +23,7 @@ const DEVICES: { icon: IconName; title: string; steps: string[] }[] = [
     title: "Meta Quest, Pico & other headsets",
     steps: [
       "Open this website in the headset's built-in browser.",
-      "Open a video and press the gold “Enter VR” button.",
+      "Open a video and press the blue “Enter VR” button.",
       "Look around naturally. Press the controller trigger to play or pause.",
       "Press the Meta / home button to leave VR and return to the page.",
     ],
@@ -57,22 +57,22 @@ const KEYS = [
 
 export default function HowToWatchPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 pt-8 sm:px-6">
-      <p className="text-xs font-semibold tracking-[0.2em] text-gold-ink uppercase">Viewing guide</p>
-      <h1 className="font-display mt-1 text-4xl font-semibold sm:text-5xl">How to watch in 360° & VR</h1>
+    <div className="narrow pt-8">
+      <p className="text-xs font-semibold tracking-[0.2em] text-brand-ink uppercase">Viewing guide</p>
+      <h1 className="t-page mt-1">How to watch in 360° & VR</h1>
       <p className="mt-3 max-w-2xl text-muted">No app to install. Every video plays in your web browser, and the same page works on a phone, computer or VR headset.</p>
 
-      <div className="mt-10 grid gap-5 md:grid-cols-2">
+      <div className="mt-10 grid-split">
         {DEVICES.map((d) => (
           <section key={d.title} className="rounded-2xl border border-line bg-surface p-6">
-            <span className="grid size-12 place-items-center rounded-xl bg-gold/15 text-gold-ink">
+            <span className="grid size-12 place-items-center rounded-xl bg-brand-ink/15 text-brand-ink">
               <Icon name={d.icon} size={24} />
             </span>
             <h2 className="mt-4 text-xl font-semibold">{d.title}</h2>
             <ol className="mt-3 space-y-2">
               {d.steps.map((s, i) => (
                 <li key={s} className="flex gap-3 text-sm leading-relaxed text-fg/85">
-                  <span className="grid size-6 shrink-0 place-items-center rounded-full bg-surface-2 text-xs font-semibold text-gold-ink">{i + 1}</span>
+                  <span className="grid size-6 shrink-0 place-items-center rounded-full bg-surface-2 text-xs font-semibold text-brand-ink">{i + 1}</span>
                   {s}
                 </li>
               ))}
@@ -82,8 +82,8 @@ export default function HowToWatchPage() {
       </div>
 
       <section className="mt-12">
-        <h2 className="font-display text-3xl font-semibold">Keyboard shortcuts</h2>
-        <dl className="mt-5 grid gap-x-8 rounded-2xl border border-line bg-surface p-2 sm:grid-cols-2">
+        <h2 className="t-section">Keyboard shortcuts</h2>
+        <dl className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(min(100%,18rem),1fr))] gap-x-8 rounded-2xl border border-line bg-surface p-2">
           {KEYS.map(([k, v]) => (
             <div key={k} className="flex items-center justify-between gap-4 border-b border-line px-4 py-3 last:border-0 sm:[&:nth-last-child(2)]:border-0">
               <dt className="text-sm text-muted">{v}</dt>
@@ -110,7 +110,7 @@ export default function HowToWatchPage() {
         </ul>
       </section>
 
-      <Link href="/videos" className="mt-10 inline-flex h-12 items-center gap-2 rounded-full bg-gold px-6 font-semibold text-black transition hover:bg-gold-strong">
+      <Link href="/videos" className="mt-10 inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 font-semibold text-white transition hover:bg-brand-strong">
         <Icon name="play" size={20} /> Start watching
       </Link>
     </div>

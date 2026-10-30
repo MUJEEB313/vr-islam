@@ -35,7 +35,7 @@ export function SearchButton() {
       >
         <Icon name="search" size={18} />
         <span className="hidden md:inline">Search ziyarat, shrines…</span>
-        <kbd className="ml-auto hidden rounded border border-line px-1.5 py-0.5 font-sans text-[11px] md:inline">⌘K</kbd>
+        <kbd className="ml-auto hidden rounded border border-line px-1.5 py-0.5 font-sans text-[11px] pointer-fine:md:inline">⌘K</kbd>
       </button>
       {open && <SearchDialog onClose={() => setOpen(false)} />}
     </>
@@ -77,12 +77,12 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 backdrop-blur-sm sm:p-4 sm:pt-[12vh]" onClick={onClose} role="presentation">
+    <div className="search-overlay fixed inset-0 z-50 flex items-start justify-center bg-black/60 backdrop-blur-sm sm:p-4 sm:pt-[12vh] short:p-0" onClick={onClose} role="presentation">
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Search"
-        className="flex h-dvh w-full flex-col overflow-hidden bg-surface pt-[env(safe-area-inset-top)] shadow-2xl sm:h-auto sm:max-w-xl sm:rounded-2xl sm:border sm:border-line-strong sm:pt-0"
+        className="search-sheet flex h-dvh w-full flex-col overflow-hidden bg-surface pt-[env(safe-area-inset-top)] shadow-2xl sm:h-auto sm:max-w-xl sm:rounded-2xl sm:border sm:border-line-strong sm:pt-0 short:h-dvh"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={onKeyDown}
       >
@@ -101,14 +101,14 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
             aria-controls="search-results"
             aria-activedescendant={results[active] ? `sr-${active}` : undefined}
           />
-          <button onClick={onClose} className="h-11 px-1 text-sm font-medium text-gold-ink sm:hidden">
+          <button onClick={onClose} className="h-11 px-1 text-sm font-medium text-brand-ink pointer-fine:hidden">
             Cancel
           </button>
-          <button onClick={onClose} className="hidden rounded border border-line px-1.5 py-0.5 text-[11px] text-muted sm:block">
+          <button onClick={onClose} className="hidden rounded border border-line px-1.5 py-0.5 text-[11px] text-muted pointer-fine:block">
             Esc
           </button>
         </div>
-        <ul id="search-results" role="listbox" className="flex-1 overflow-y-auto overscroll-contain p-2 sm:max-h-[60vh] sm:flex-none">
+        <ul id="search-results" role="listbox" className="flex-1 overflow-y-auto overscroll-contain p-2 sm:max-h-[60dvh] sm:flex-none short:max-h-none">
           {results.length === 0 && <li className="px-3 py-8 text-center text-sm text-muted">No results for “{q}”.</li>}
           {results.map((r, i) => (
             <li key={r.href} id={`sr-${i}`} role="option" aria-selected={i === active}>
@@ -122,7 +122,7 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={asset(r.poster)} alt="" className="h-10 w-16 shrink-0 rounded-md object-cover" />
                 ) : (
-                  <span className="grid h-10 w-16 shrink-0 place-items-center rounded-md bg-surface-3 text-gold-ink">
+                  <span className="grid h-10 w-16 shrink-0 place-items-center rounded-md bg-surface-3 text-brand-ink">
                     <Icon name={r.type === "shrine" ? "map" : "eye"} size={18} />
                   </span>
                 )}

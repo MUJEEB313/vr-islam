@@ -62,10 +62,10 @@ export function LibraryBrowser() {
 
   return (
     <div>
-      <div className="-mx-4 border-b border-line bg-bg/90 px-4 py-3 backdrop-blur-xl sm:sticky sm:top-16 sm:z-30 sm:-mx-6 sm:px-6">
+      <div className="bleed border-b border-line bg-bg/90 py-3 backdrop-blur-xl sm:sticky sm:top-16 sm:z-30 short:static">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
-            <label className="flex h-11 min-w-0 flex-1 items-center gap-2 rounded-full border border-line bg-surface px-4 sm:h-10 sm:max-w-xs">
+            <label className="flex h-11 min-w-0 flex-1 items-center gap-2 rounded-full border border-line bg-surface px-4 sm:max-w-xs pointer-fine:h-10">
               <Icon name="search" size={18} className="text-muted" />
               <span className="sr-only">Search videos</span>
               <input
@@ -74,13 +74,13 @@ export function LibraryBrowser() {
                 defaultValue={q}
                 onChange={(e) => set("q", e.target.value)}
                 placeholder="Search the library"
-                className="min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-muted sm:text-sm"
+                className="min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-muted pointer-fine:text-sm"
               />
             </label>
             <div className="hidden gap-2 sm:flex">{selects}</div>
           </div>
           {/* Phones: categories, then the selects, share one swipeable row instead of stacking. */}
-          <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto overscroll-x-contain px-4 sm:mx-0 sm:px-0">
+          <div className="no-scrollbar bleed flex gap-2 overflow-x-auto overscroll-x-contain sm:mx-0 sm:px-0">
             <Chip active={!category} onClick={() => set("category", "")}>
               All
             </Chip>
@@ -100,7 +100,7 @@ export function LibraryBrowser() {
           {results.length} {results.length === 1 ? "video" : "videos"}
         </span>
         {active > 0 && (
-          <button onClick={() => router.replace(pathname, { scroll: false })} className="-my-3 h-11 text-gold-ink hover:underline">
+          <button onClick={() => router.replace(pathname, { scroll: false })} className="-my-3 h-11 text-brand-ink hover:underline">
             Clear filters
           </button>
         )}
@@ -110,7 +110,7 @@ export function LibraryBrowser() {
         <VideoGrid videos={results} />
       ) : (
         <div className="rounded-2xl border border-dashed border-line-strong p-12 text-center">
-          <p className="font-display text-2xl">No videos match these filters yet</p>
+          <p className="t-card">No videos match these filters yet</p>
           <p className="mt-2 text-sm text-muted">Try a different shrine or category, or clear the filters.</p>
         </div>
       )}
@@ -123,7 +123,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
     <button
       onClick={onClick}
       aria-pressed={active}
-      className={`h-11 shrink-0 rounded-full px-4 text-sm font-medium transition sm:h-9 ${active ? "bg-fg text-bg" : "border border-line bg-surface text-muted hover:text-fg"}`}
+      className={`h-11 shrink-0 rounded-full px-4 text-sm font-medium transition pointer-fine:h-9 ${active ? "bg-brand text-white" : "border border-line bg-surface text-muted hover:text-fg"}`}
     >
       {children}
     </button>
@@ -149,7 +149,7 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`h-11 appearance-none rounded-full border bg-surface pr-9 pl-4 text-base outline-none transition sm:h-10 sm:text-sm ${value ? "border-gold/50 text-fg" : "border-line text-muted"}`}
+        className={`h-11 appearance-none rounded-full border bg-surface pr-9 pl-4 text-base outline-none transition pointer-fine:h-10 pointer-fine:text-sm ${value ? "border-brand-ink/50 text-fg" : "border-line text-muted"}`}
       >
         <option value="">{placeholder ?? `Any ${label.toLowerCase()}`}</option>
         {options.map((o) => (

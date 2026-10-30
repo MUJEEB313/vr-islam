@@ -14,9 +14,9 @@ export function ContinueWatching() {
     .slice(0, 4);
   if (!items.length) return null;
   return (
-    <section className="mx-auto mt-16 max-w-7xl px-4 sm:px-6">
+    <section className="wrap mt-16">
       <SectionHeading eyebrow="Pick up where you left off" title="Continue watching" href="/saved" linkLabel="Your library" />
-      <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid-cards">
         {items.map(({ video, p }) => (
           <VideoCard key={video!.slug} video={video!} progress={p.t / p.d} />
         ))}

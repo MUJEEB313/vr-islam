@@ -29,7 +29,7 @@ export default async function EmbedPage({ params }: Props) {
         target="_blank"
         className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full bg-black/55 py-1 pr-3 pl-1.5 text-xs text-white backdrop-blur hover:bg-black/75"
       >
-        <LogoMark size={20} /> Watch on {site.name}
+        <LogoMark onDark className="h-5" /> Watch on {site.name}
       </Link>
     </div>
   );

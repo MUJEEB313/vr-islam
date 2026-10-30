@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Amiri, Cormorant_Garamond, Inter } from "next/font/google";
+import { Amiri, Inter, Sora } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 // Only the weights actually used are loaded, to keep mobile downloads small.
-const cormorant = Cormorant_Garamond({ variable: "--font-cormorant", subsets: ["latin"], weight: "600" });
+const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: "600" });
 const amiri = Amiri({ variable: "--font-amiri", subsets: ["arabic"], weight: "400" });
 
 export const metadata: Metadata = {
@@ -24,8 +24,8 @@ export const viewport: Viewport = {
   // Draw under the notch / home indicator; layouts add safe-area padding.
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#060912" },
-    { media: "(prefers-color-scheme: light)", color: "#f8f5ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#020c1f" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f9ff" },
   ],
 };
 
@@ -34,7 +34,7 @@ const themeScript = `try{var t=localStorage.getItem("zvr:theme");if(t==="light"|
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="dark" className={`${inter.variable} ${cormorant.variable} ${amiri.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${inter.variable} ${sora.variable} ${amiri.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

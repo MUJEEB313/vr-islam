@@ -15,37 +15,37 @@ const PRINCIPLES = [
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 pt-8 sm:px-6">
-      <p className="text-xs font-semibold tracking-[0.2em] text-gold-ink uppercase">About</p>
-      <h1 className="font-display mt-1 text-4xl leading-tight font-semibold sm:text-5xl">A doorway to the shrines, for everyone who longs to visit</h1>
+    <div className="narrow pt-8">
+      <p className="text-xs font-semibold tracking-[0.2em] text-brand-ink uppercase">About</p>
+      <h1 className="t-page mt-1">A doorway to the shrines, for everyone who longs to visit</h1>
       <p className="mt-5 text-lg leading-relaxed text-fg/85">
         Millions of believers long to stand before the shrines of the Ahl al-Bayt (a.s.) but cannot make the journey. {site.name} brings the courtyards
         of Karbala, Najaf, Kadhimiya, Samarra, Mashhad, Qom, Damascus and Madinah to any screen or headset, in full 360°.
       </p>
 
-      <div className="mt-12 grid gap-5 sm:grid-cols-2">
+      <div className="mt-12 grid-split">
         {PRINCIPLES.map((p) => (
           <section key={p.title} className="rounded-2xl border border-line bg-surface p-6">
-            <h2 className="font-display text-2xl font-semibold">{p.title}</h2>
+            <h2 className="t-card">{p.title}</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
           </section>
         ))}
       </div>
 
-      <section id="submit" className="mt-14 rounded-3xl border border-gold/30 bg-gold/10 p-6 sm:p-10">
-        <h2 className="font-display text-3xl font-semibold">Share your 360° footage</h2>
+      <section id="submit" className="mt-14 rounded-3xl border border-brand-ink/30 bg-brand-ink/10 p-6 sm:p-10">
+        <h2 className="t-section">Share your 360° footage</h2>
         <p className="mt-3 leading-relaxed text-fg/85">
           Have you filmed a ziyarat, the Arbaeen walk or a majlis with a 360° camera? Send it to us, with your name for the credits and permission from
           the shrine or organisers where needed. Equirectangular 360° video (mono or top/bottom stereo) and 180° side-by-side 3D are all supported, at 4K
           or higher.
         </p>
-        <a href={`mailto:${site.contactEmail}?subject=360%C2%B0%20footage%20submission`} className="mt-6 inline-flex h-12 items-center rounded-full bg-gold px-6 font-semibold text-black transition hover:bg-gold-strong">
+        <a href={`mailto:${site.contactEmail}?subject=360%C2%B0%20footage%20submission`} className="mt-6 inline-flex min-h-12 max-w-full items-center rounded-full bg-brand px-6 py-2 text-center [overflow-wrap:anywhere] font-semibold text-white transition hover:bg-brand-strong">
           Email {site.contactEmail}
         </a>
       </section>
 
       <section className="mt-14">
-        <h2 className="font-display text-2xl font-semibold">About the current videos</h2>
+        <h2 className="t-card">About the current videos</h2>
         <p className="mt-3 text-sm leading-relaxed text-muted">
           While real footage is being gathered, the videos in the library are illustrated 360° scenes generated in your browser. They show how each
           ziyarat will look and play, including in VR. Each one is labelled “Placeholder scene” and will be replaced with real recordings.

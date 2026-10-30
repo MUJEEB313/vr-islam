@@ -23,7 +23,7 @@ export function SaveIcon({ slug, list = "favourites" }: { slug: string; list?: L
       aria-pressed={on}
       aria-label={on ? c.on : c.off}
       title={on ? c.on : c.off}
-      className={`grid size-11 place-items-center rounded-full bg-black/45 sm:size-9 backdrop-blur transition hover:bg-black/65 ${on ? "text-[var(--gold-strong)]" : "text-white"}`}
+      className={`grid size-11 place-items-center rounded-full bg-black/45 pointer-fine:size-9 backdrop-blur transition hover:bg-black/65 ${on ? "text-brand-bright" : "text-white"}`}
     >
       <Icon name={c.icon} size={18} fill={on && list === "favourites" ? "currentColor" : "none"} />
     </button>
@@ -39,7 +39,7 @@ export function SavePill({ slug, list }: { slug: string; list: ListKey }) {
     <button
       onClick={() => toggle(slug)}
       aria-pressed={on}
-      className={`flex h-10 items-center gap-2 rounded-full border px-4 text-sm font-medium transition ${on ? "border-gold/50 bg-gold/15 text-gold-ink" : "border-line-strong hover:bg-surface-2"}`}
+      className={`flex h-10 items-center gap-2 rounded-full border px-4 text-sm font-medium transition ${on ? "border-brand-ink/50 bg-brand-ink/15 text-brand-ink" : "border-line-strong hover:bg-surface-2"}`}
     >
       <Icon name={on ? "check" : c.icon} size={18} />
       {on ? c.on : c.off}

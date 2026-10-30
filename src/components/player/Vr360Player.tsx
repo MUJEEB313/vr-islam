@@ -660,7 +660,7 @@ export default function Vr360Player({
   return (
     <div
       ref={containerRef}
-      className={`group/player relative isolate overflow-hidden bg-black text-white select-none ${className}`}
+      className={`group/player @container relative isolate overflow-hidden bg-black text-white select-none ${className}`}
       tabIndex={full ? 0 : -1}
       onKeyDown={onKeyDown}
       onMouseMove={() => full && setControlsVisible(true)}
@@ -678,14 +678,14 @@ export default function Vr360Player({
       {!ready && !error && mode !== "capture" && (
         <div className="pointer-events-none absolute inset-0 grid place-items-center">
           <div className="flex items-center gap-3 rounded-full bg-black/55 px-4 py-2 text-sm backdrop-blur">
-            <span className="size-4 animate-spin rounded-full border-2 border-white/30 border-t-[var(--gold)]" />
+            <span className="size-4 animate-spin rounded-full border-2 border-white/30 border-t-brand-bright" />
             Preparing 360° view…
           </div>
         </div>
       )}
       {buffering && playing && (
         <div className="pointer-events-none absolute inset-0 grid place-items-center">
-          <span className="size-10 animate-spin rounded-full border-4 border-white/25 border-t-[var(--gold)]" />
+          <span className="size-10 animate-spin rounded-full border-4 border-white/25 border-t-brand-bright" />
         </div>
       )}
 
@@ -706,7 +706,7 @@ export default function Vr360Player({
           {resumedAt !== null && (
             <div className="absolute top-3 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full bg-black/65 px-4 py-1.5 text-sm backdrop-blur">
               Resumed at {formatDuration(resumedAt)}
-              <button className="font-medium text-[var(--gold-strong)] hover:underline" onClick={() => { seek(0); setResumedAt(null); }}>
+              <button className="font-medium text-brand-bright hover:underline" onClick={() => { seek(0); setResumedAt(null); }}>
                 Start over
               </button>
             </div>
@@ -715,21 +715,21 @@ export default function Vr360Player({
           {(!started || ended) && (
             <button
               onClick={ended ? () => { seek(0); play(); } : play}
-              className="absolute top-1/2 left-1/2 grid size-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-black/45 ring-1 ring-white/30 backdrop-blur transition hover:scale-105 hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-[var(--gold)]"
+              className="absolute top-1/2 left-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 @md:size-20 place-items-center rounded-full bg-black/45 ring-1 ring-white/30 backdrop-blur transition hover:scale-105 hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-brand-bright"
               aria-label={ended ? "Replay" : "Play"}
             >
-              <Icon name={ended ? "replay" : "play"} size={34} className="text-[var(--gold-strong)]" />
+              <Icon name={ended ? "replay" : "play"} size={30} className="text-white" />
             </button>
           )}
 
           {hint && !started && (
-            <div className="pointer-events-none absolute bottom-24 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/55 px-4 py-2 text-sm whitespace-nowrap backdrop-blur">
-              <Icon name="drag" size={16} /> Drag to look around<span className="hidden sm:inline"> · Scroll to zoom</span>
+            <div className="pointer-events-none absolute bottom-24 left-1/2 hidden -translate-x-1/2 @xs:flex short:hidden items-center gap-2 rounded-full bg-black/55 px-4 py-2 text-sm whitespace-nowrap backdrop-blur">
+              <Icon name="drag" size={16} /> Drag to look around<span className="hidden pointer-fine:inline"> · Scroll to zoom</span>
             </div>
           )}
 
           <div
-            className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-[max(0.75rem,env(safe-area-inset-left))] pt-12 pb-[max(0.5rem,env(safe-area-inset-bottom))] transition-opacity duration-300 sm:px-4 ${showControls ? "opacity-100" : "pointer-events-none opacity-0"}`}
+            className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-[max(0.75rem,env(safe-area-inset-left))] pt-12 pb-[max(0.5rem,env(safe-area-inset-bottom))] transition-opacity duration-300 sm:px-4 ${showControls ? "pointer-events-none opacity-100 [&>*]:pointer-events-auto" : "pointer-events-none opacity-0"}`}
           >
             <input
               type="range"
@@ -756,27 +756,27 @@ export default function Vr360Player({
                     value={muted ? 0 : volume}
                     onChange={(ev) => changeVolume(Number(ev.target.value))}
                     aria-label="Volume"
-                    className="player-range hidden w-20 sm:block"
+                    className="player-range hidden w-20 pointer-fine:@lg:block"
                     style={{ "--progress": `${(muted ? 0 : volume) * 100}%` } as React.CSSProperties}
                   />
                 </div>
               )}
-              <span className="ml-1 text-xs text-white/85 tabular-nums sm:text-sm">
+              <span className="ml-1 text-xs whitespace-nowrap text-white/85 tabular-nums @md:text-sm">
                 {formatDuration(current)} <span className="text-white/50">/ {formatDuration(duration)}</span>
               </span>
               <div className="ml-auto flex items-center gap-0.5 sm:gap-1">
-                <CtrlButton label="Zoom out (-)" onClick={() => zoom(10)} icon="zoomOut" className="hidden sm:grid" />
-                <CtrlButton label="Zoom in (+)" onClick={() => zoom(-10)} icon="zoomIn" className="hidden sm:grid" />
-                <CtrlButton label="Recenter view (r)" onClick={recenter} icon="recenter" />
+                <CtrlButton label="Zoom out (-)" onClick={() => zoom(10)} icon="zoomOut" className="hidden pointer-fine:@lg:grid" />
+                <CtrlButton label="Zoom in (+)" onClick={() => zoom(-10)} icon="zoomIn" className="hidden pointer-fine:@lg:grid" />
+                <CtrlButton label="Recenter view (r)" onClick={recenter} icon="recenter" className="hidden @xs:grid" />
                 {gyroAvailable && <CtrlButton label={gyroOn ? "Turn off motion control" : "Look around by moving your phone"} onClick={toggleGyro} icon="gyro" active={gyroOn} />}
                 {xrSupported && (
                   <button
                     onClick={enterVR}
                     disabled={inXR}
                     aria-label="Enter VR"
-                    className="ml-1 flex h-11 items-center gap-1.5 rounded-full bg-[var(--gold)] px-3 text-sm font-semibold text-black transition hover:bg-[var(--gold-strong)] sm:h-9"
+                    className="ml-1 flex h-11 items-center gap-1.5 rounded-full bg-brand px-3 text-sm font-semibold text-white transition hover:bg-brand-strong pointer-fine:h-9"
                   >
-                    <Icon name="headset" size={18} /> <span className="hidden sm:inline">Enter VR</span>
+                    <Icon name="headset" size={18} /> <span className="hidden @lg:inline">Enter VR</span>
                   </button>
                 )}
                 <CtrlButton label={isFullscreen || pseudoFs ? "Exit full screen (f)" : "Full screen (f)"} onClick={toggleFullscreen} icon={isFullscreen || pseudoFs ? "exitFullscreen" : "fullscreen"} />
@@ -808,7 +808,7 @@ function CtrlButton({
       aria-label={label}
       title={label}
       aria-pressed={active}
-      className={`grid size-11 place-items-center rounded-full transition hover:bg-white/15 sm:size-9 focus-visible:outline-2 focus-visible:outline-[var(--gold)] ${active ? "bg-white/20 text-[var(--gold-strong)]" : ""} ${className}`}
+      className={`grid size-11 place-items-center rounded-full transition hover:bg-white/15 pointer-fine:size-9 focus-visible:outline-2 focus-visible:outline-brand-bright ${active ? "bg-white/20 text-brand-bright" : ""} ${className}`}
     >
       <Icon name={icon} size={20} />
     </button>
