@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: video.title,
     description: video.summary,
-    alternates: { canonical: `/videos/${video.slug}` },
-    openGraph: { title: video.title, description: video.summary, type: "video.other", images: [{ url: video.poster, width: 1280, height: 720 }] },
+    alternates: { canonical: `${site.url}/videos/${video.slug}/` },
+    openGraph: { title: video.title, description: video.summary, type: "video.other", images: [{ url: asset(video.poster), width: 1280, height: 720 }] },
   };
 }
 

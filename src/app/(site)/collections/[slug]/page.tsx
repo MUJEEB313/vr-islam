@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCollection((await params).slug);
   if (!c) return {};
   const cover = videosForCollection(c.slug)[0]?.poster;
-  return { title: c.title, description: c.summary, openGraph: { images: cover ? [{ url: cover, width: 1280, height: 720 }] : undefined } };
+  return { title: c.title, description: c.summary, openGraph: { images: cover ? [{ url: asset(cover), width: 1280, height: 720 }] : undefined } };
 }
 
 export default async function CollectionPage({ params }: Props) {

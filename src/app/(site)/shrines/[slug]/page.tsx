@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${shrine.name}, ${shrine.city}`,
     description: shrine.summary,
-    openGraph: { images: cover ? [{ url: cover, width: 1280, height: 720 }] : undefined },
+    openGraph: { images: cover ? [{ url: asset(cover), width: 1280, height: 720 }] : undefined },
   };
 }
 

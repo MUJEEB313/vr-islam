@@ -9,7 +9,8 @@ const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: "600" }
 const amiri = Amiri({ variable: "--font-amiri", subsets: ["arabic"], weight: "400" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  // Origin only: Next adds the base path to generated images itself, so a path here would double it.
+  metadataBase: new URL(site.origin),
   title: { default: `${site.name}: Virtual Ziyarat in 360° & VR`, template: `%s · ${site.name}` },
   description: site.description,
   openGraph: { siteName: site.name, type: "website", locale: "en" },
