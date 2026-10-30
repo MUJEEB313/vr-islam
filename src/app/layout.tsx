@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Amiri, Inter, Sora } from "next/font/google";
-import { site } from "@/lib/site";
+import { asset, site } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -8,13 +8,15 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: "600" });
 const amiri = Amiri({ variable: "--font-amiri", subsets: ["arabic"], weight: "400" });
 
+const shareImage = asset("/brand/og-image.jpg");
+
 export const metadata: Metadata = {
-  // Origin only: Next adds the base path to generated images itself, so a path here would double it.
+  // Origin only: relative URLs below already include the base path.
   metadataBase: new URL(site.origin),
   title: { default: `${site.name}: Virtual Ziyarat in 360° & VR`, template: `%s · ${site.name}` },
   description: site.description,
-  openGraph: { siteName: site.name, type: "website", locale: "en" },
-  twitter: { card: "summary_large_image" },
+  openGraph: { siteName: site.name, type: "website", locale: "en", images: [{ url: shareImage, width: 1200, height: 630 }] },
+  twitter: { card: "summary_large_image", images: [shareImage] },
   appleWebApp: { capable: true, title: site.name, statusBarStyle: "black-translucent" },
   formatDetection: { telephone: false },
 };

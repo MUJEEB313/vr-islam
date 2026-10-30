@@ -59,7 +59,7 @@ Before launch, set `contactEmail` in `src/lib/site.ts`.
 
 ## Brand
 
-The logo source is in `logo/`. `node scripts/make-brand.mjs` regenerates the transparent logo variants in `public/brand/` and the app icons. Colours and fluid type live in `src/app/globals.css`.
+The logo source is in `logo/`. `node scripts/make-brand.mjs` regenerates the transparent logo variants in `public/brand/` and the app icons; `node scripts/make-share-image.mjs` regenerates the link-preview image. Colours and fluid type live in `src/app/globals.css`.
 
 ## Screens
 
