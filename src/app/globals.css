@@ -30,6 +30,9 @@
   --navy: #00193f;
   color-scheme: light;
 
+  /* Vertical space between page sections. */
+  --section-gap: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+
   /* Page side padding; respects notches when a phone is on its side. */
   --gutter: max(1rem, env(safe-area-inset-left), env(safe-area-inset-right));
 }
