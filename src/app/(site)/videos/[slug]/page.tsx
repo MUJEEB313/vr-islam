@@ -5,7 +5,7 @@ import { Icon } from "@/components/Icons";
 import { VideoPlayer } from "@/components/player/VideoPlayer";
 import { ShareEmbed } from "@/components/ShareEmbed";
 import { getVideo, relatedVideos, thumbOf, videos } from "@/content";
-import { formatDate, formatDuration, formatLabel, formatViews } from "@/lib/format";
+import { formatDate, formatDuration, formatViews } from "@/lib/format";
 import { asset, site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -57,11 +57,10 @@ export default async function WatchPage({ params }: Props) {
       <div className="grid gap-10 @4xl:grid-cols-[minmax(0,1fr)_360px]">
         <article>
           <Link href="/#views" className="-my-2 mb-2 inline-flex h-11 items-center gap-1 text-sm text-muted hover:text-brand-ink">
-            <Icon name="chevronLeft" size={16} /> All 360° views
+            <Icon name="chevronLeft" size={16} /> All teasers
           </Link>
           <h1 className="t-page">{video.title}</h1>
           <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
-            <span className="rounded-full bg-brand-ink/15 px-2.5 py-0.5 text-xs font-semibold text-brand-ink">{formatLabel[video.format]}</span>
             <span className="flex items-center gap-1.5">
               <Icon name="clock" size={16} /> {formatDuration(video.duration)}
             </span>
@@ -106,9 +105,6 @@ export default async function WatchPage({ params }: Props) {
                   </span>
                   <span className="min-w-0">
                     <span className="line-clamp-2 text-sm leading-snug font-medium group-hover:text-brand-ink">{v.title}</span>
-                    <span className="mt-1 block text-xs text-muted">
-                      {v.location} · {formatViews(v.views)} views
-                    </span>
                   </span>
                 </Link>
               </li>

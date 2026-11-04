@@ -16,7 +16,7 @@ export default function HomePage() {
 
       <section id="views" aria-labelledby="views-title" className="wrap mt-10 scroll-mt-4">
         <h2 id="views-title" className="t-section mb-6">
-          360° views
+          Teasers
         </h2>
         <VideoGrid videos={videos} />
       </section>
