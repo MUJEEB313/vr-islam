@@ -42,7 +42,7 @@ export default function HomePage() {
                   <LogoMark className="h-6" />
                 </span>
                 <h3 className="mt-4 font-semibold text-brand-ink">VR Islam app</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted">Install the VR Islam app on your VR headset and watch every video in full immersion.</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted">Watch every video in full immersion with the VR Islam app.</p>
               </div>
               {DEVICES.map((d) => (
                 <div key={d.title} className="rounded-2xl border border-line bg-bg/60 p-5">
