@@ -13,7 +13,10 @@ export function SiteFooter() {
         <div>
           <Logo className="h-16" />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
-            Experience Islam beyond imagination. Relive history through virtual reality. Don&apos;t just learn history. Experience it.
+            <span className="block">Experience Islam beyond imagination.</span>
+            <span className="block">Relive history through virtual reality.</span>
+            <span className="block">Don&apos;t just learn history.</span>
+            <span className="block">Experience it.</span>
           </p>
         </div>
 
@@ -33,10 +36,12 @@ export function SiteFooter() {
 
         <FooterCol title="Our initiative">
           <ul className="space-y-2.5 text-sm text-fg/85">
-            {site.initiatives.map((name) => (
-              <li key={name} className="flex items-center gap-2">
-                <span className="size-1.5 rotate-45 bg-brand" aria-hidden="true" />
-                {name}
+            {site.initiatives.map(({ name, href }) => (
+              <li key={name}>
+                <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition hover:text-brand-ink">
+                  <span className="size-1.5 rotate-45 bg-brand" aria-hidden="true" />
+                  {name}
+                </a>
               </li>
             ))}
           </ul>

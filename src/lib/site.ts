@@ -8,6 +8,7 @@ export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const asset = (path: string) => (path.startsWith("/") ? `${basePath}${path}` : path);
 
 const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://example.com";
+const youtube = "https://www.youtube.com/@vrIslamofficial";
 
 /** Site-wide settings. Rename the site here. */
 export const site = {
@@ -23,9 +24,12 @@ export const site = {
     phone: "(+91) 89763 80690",
     phoneHref: "tel:+918976380690",
     email: "info@arbaeenmemories.com",
-    youtube: "https://www.youtube.com/@vrIslamofficial",
+    youtube,
     youtubeHandle: "@vrIslamofficial",
   },
-  /** Sister projects, listed in the footer. */
-  initiatives: ["AM", "Yaqeen Media", "VR Islam"],
+  /** Sister projects, linked in the footer. */
+  initiatives: [
+    { name: "AM", href: "https://www.instagram.com/arbaeenmemories?cplk=N2NhdjJscnRwOGJo" },
+    { name: "VR Islam", href: youtube },
+  ],
 };
