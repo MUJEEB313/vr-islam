@@ -27,9 +27,10 @@ export const site = {
     youtube,
     youtubeHandle: "@vrIslamofficial",
   },
-  /** Sister projects, linked in the footer. */
+  /** Sister projects, linked in the footer. "#" marks a site that isn't online yet. */
   initiatives: [
-    { name: "AM", href: "https://www.instagram.com/arbaeenmemories?cplk=N2NhdjJscnRwOGJo" },
-    { name: "VR Islam", href: youtube },
+    { name: "www.arbaeenmemories.com", href: "https://arbaeenmemories.com" },
+    { name: "www.vrislam.com", href: "#" },
+    { name: "www.yakeenmedia", href: "#" },
   ],
 };

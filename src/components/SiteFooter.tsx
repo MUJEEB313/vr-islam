@@ -38,7 +38,11 @@ export function SiteFooter() {
           <ul className="space-y-2.5 text-sm text-fg/85">
             {site.initiatives.map(({ name, href }) => (
               <li key={name}>
-                <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition hover:text-brand-ink">
+                <a
+                  href={href}
+                  {...(href === "#" ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                  className="inline-flex items-center gap-2 break-all transition hover:text-brand-ink"
+                >
                   <span className="size-1.5 rotate-45 bg-brand" aria-hidden="true" />
                   {name}
                 </a>
