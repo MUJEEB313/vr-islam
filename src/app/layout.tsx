@@ -9,7 +9,7 @@ const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: "600" }
 const amiri = Amiri({ variable: "--font-amiri", subsets: ["arabic"], weight: "400" });
 
 // A new file name whenever the image changes, so apps that cached the old preview fetch it again.
-const shareImage = asset("/brand/share-v2.jpg");
+const shareImage = asset("/brand/share-v3.jpg");
 
 export const metadata: Metadata = {
   // Origin only: relative URLs below already include the base path.

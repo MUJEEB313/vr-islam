@@ -181,13 +181,14 @@ body {
   .watch-frame {
     width: 100%;
     aspect-ratio: 16 / 9;
-    /* Leaves room for the logo header above. */
-    max-height: calc(100dvh - 9.5rem);
+    /* Always the full page width; on wide screens it gets wider rather than
+       taller, so it fits below the logo and title. */
+    max-height: max(18rem, calc(100dvh - 17rem));
   }
   @media (orientation: portrait) {
     .watch-frame {
       aspect-ratio: 1 / 1;
-      max-height: 64dvh;
+      max-height: 60dvh;
     }
   }
   @media (orientation: portrait) and (min-width: 40rem) {
@@ -197,8 +198,8 @@ body {
   }
   @media (orientation: landscape) and (max-height: 500px) {
     .watch-frame {
-      /* Only the compact logo header above. */
-      max-height: calc(100dvh - 4rem);
+      /* Too short for header, title and player at once: fills the screen once scrolled to. */
+      max-height: 100dvh;
     }
   }
 }

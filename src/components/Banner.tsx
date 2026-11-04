@@ -15,9 +15,8 @@ export function Banner() {
     <section aria-label="Welcome" className="relative overflow-hidden border-b border-line bg-gradient-to-b from-[#eef5ff] to-[#dceafc]">
       <div className="bg-girih pointer-events-none absolute inset-0 opacity-[0.13]" />
       <Skyline />
-      <div className="wrap relative flex min-h-[clamp(9.5rem,20vw,15rem)] flex-col items-center justify-center pt-[clamp(1.25rem,3vw,2rem)] pb-[clamp(3.25rem,6.5vw,5.25rem)] text-center">
-        <p className="arabic text-center text-[clamp(1.2rem,1rem+1vw,1.75rem)] text-brand-ink">السلام عليكم</p>
-        <h1 className="mt-1 font-display leading-[1.05] font-bold tracking-[0.02em] uppercase">
+      <div className="wrap relative flex flex-col items-center pt-[clamp(1.75rem,4vw,3rem)] pb-[calc(clamp(2.5rem,6vw,4.5rem)+clamp(1rem,2.5vw,1.75rem))] text-center">
+        <h1 className="font-display leading-[1.05] font-bold tracking-[0.02em] uppercase">
           <span className="block text-[clamp(1.5rem,1rem+2.6vw,3rem)] text-brand">Experience Islam</span>
           <span className="mt-1 block text-[clamp(1rem,0.75rem+1.4vw,1.85rem)] font-semibold tracking-[0.12em] text-navy">Beyond imagination</span>
         </h1>

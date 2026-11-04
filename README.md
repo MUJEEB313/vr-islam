@@ -22,8 +22,8 @@ Every push to `main` is built and published to **GitHub Pages** by `.github/work
 
 ## Pages
 
-- **Home**: the logo, a small banner ("Experience Islam beyond imagination" with Explore / Visit / Feel), a card for every 360° view, and a short "how to watch" box.
-- **Watch** (`/videos/<slug>`): the 360° player, details, share/embed and "Up next".
+- **Home**: the logo, a small banner ("Experience Islam beyond imagination" with Explore / Visit / Feel), the 360° videos, a short "how to watch" box, and a footer with the latest videos, our initiatives and contact details.
+- **Watch** (`/videos/<slug>`): the title on top, the 360° player at full width, then details, share/embed and "Up next".
 - **Embed** (`/embed/<slug>`): a chrome-less player for other websites' `<iframe>`s.
 
 ## Adding real videos

@@ -46,34 +46,36 @@ export default async function WatchPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <div className="wrap pt-4 pb-5 short:pt-2 short:pb-3">
+        <Link href="/#views" className="-my-2 mb-2 inline-flex h-11 items-center gap-1 text-sm text-muted hover:text-brand-ink">
+          <Icon name="chevronLeft" size={16} /> All 360° videos
+        </Link>
+        <h1 className="t-page">{video.title}</h1>
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+          <span className="flex items-center gap-1.5">
+            <Icon name="clock" size={16} /> {formatDuration(video.duration)}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Icon name="eye" size={16} /> {formatViews(video.views)} views
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Icon name="map" size={16} /> {video.location}
+          </span>
+          <span>{formatDate(video.publishedAt)}</span>
+        </div>
+
+      </div>
       <div className="watch">
-      <div className="watch-stage wrap-wide px-0! pt-0 sm:px-2! sm:pt-4 short:pt-0">
-        <div className="watch-frame overflow-hidden bg-black sm:rounded-3xl sm:ring-1 sm:ring-line short:rounded-none fold-h:rounded-none">
+      <div className="watch-stage">
+        <div className="watch-frame overflow-hidden bg-black">
           <VideoPlayer video={video} className="h-full w-full" />
         </div>
       </div>
 
-      <div className="watch-details @container wrap mt-6">
+      <div className="watch-details @container wrap mt-5">
       <div className="grid gap-10 @4xl:grid-cols-[minmax(0,1fr)_360px]">
         <article>
-          <Link href="/#views" className="-my-2 mb-2 inline-flex h-11 items-center gap-1 text-sm text-muted hover:text-brand-ink">
-            <Icon name="chevronLeft" size={16} /> All teasers
-          </Link>
-          <h1 className="t-page">{video.title}</h1>
-          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
-            <span className="flex items-center gap-1.5">
-              <Icon name="clock" size={16} /> {formatDuration(video.duration)}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Icon name="eye" size={16} /> {formatViews(video.views)} views
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Icon name="map" size={16} /> {video.location}
-            </span>
-            <span>{formatDate(video.publishedAt)}</span>
-          </div>
-
-          <div className="mt-5 flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2">
             <ShareEmbed slug={video.slug} title={video.title} />
           </div>
 

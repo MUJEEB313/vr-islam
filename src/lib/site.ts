@@ -13,8 +13,8 @@ const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://example.com";
 export const site = {
   name: "VR Islam",
   tagline: "Experience Islam beyond imagination",
-  description:
-    "Relive history through virtual reality. Explore real stories, visit historic places and feel the experience: 360° and VR views of Masjid al-Haram, Masjid an-Nabawi, Al-Aqsa and the great mosques of the world, in your browser or VR headset.",
+  // From the YouTube channel's description.
+  description: "Experience Islam Beyond Imagination. Relive History Through Virtual Reality. Don't Just Learn History. Experience It.",
   /** Scheme + host, e.g. "https://name.github.io". Set NEXT_PUBLIC_SITE_ORIGIN at build time. */
   origin,
   /** Full public URL of the site root, including the base path. */
@@ -23,5 +23,9 @@ export const site = {
     phone: "(+91) 89763 80690",
     phoneHref: "tel:+918976380690",
     email: "info@arbaeenmemories.com",
+    youtube: "https://www.youtube.com/@vrIslamofficial",
+    youtubeHandle: "@vrIslamofficial",
   },
+  /** Sister projects, listed in the footer. */
+  initiatives: ["AM", "Yaqeen Media", "VR Islam"],
 };
