@@ -1,16 +1,38 @@
+import { Icon, type IconName } from "./Icons";
+
+const PILLARS: { icon: IconName; title: string; text: string }[] = [
+  { icon: "book", title: "Explore", text: "Real stories" },
+  { icon: "mosque", title: "Visit", text: "Historic places" },
+  { icon: "people", title: "Feel", text: "The experience" },
+];
+
 /**
  * Home banner: a small, full-width rectangle with an Islamic geometric
- * pattern and a mosque skyline. Text only, no buttons.
+ * pattern and a mosque skyline. Text and icons only, no buttons.
  */
 export function Banner() {
   return (
     <section aria-label="Welcome" className="relative overflow-hidden border-b border-line bg-gradient-to-b from-[#eef5ff] to-[#dceafc]">
       <div className="bg-girih pointer-events-none absolute inset-0 opacity-[0.13]" />
       <Skyline />
-      <div className="wrap relative flex min-h-[clamp(9.5rem,20vw,15rem)] flex-col items-center justify-center pt-6 pb-[clamp(3.5rem,7vw,5.5rem)] text-center">
-        <p className="arabic text-center text-[clamp(1.2rem,1rem+1vw,1.75rem)] text-brand-ink">السلام عليكم</p>
-        <h1 className="t-banner mt-1 max-w-3xl text-navy">Explore the holy mosques of Islam in 360°</h1>
-        <p className="mt-2 max-w-xl text-sm text-muted sm:text-base">Masjid al-Haram, Masjid an-Nabawi, Al-Aqsa and the great mosques of the world, in your browser or VR headset.</p>
+      <div className="wrap relative flex min-h-[clamp(9.5rem,20vw,15rem)] flex-col items-center justify-center pt-[clamp(1.25rem,3vw,2rem)] pb-[clamp(3.25rem,6.5vw,5.25rem)] text-center">
+        <h1 className="font-display leading-[1.05] font-bold tracking-[0.02em] uppercase">
+          <span className="block text-[clamp(1.5rem,1rem+2.6vw,3rem)] text-brand">Experience Islam</span>
+          <span className="mt-1 block text-[clamp(1rem,0.75rem+1.4vw,1.85rem)] font-semibold tracking-[0.12em] text-navy">Beyond imagination</span>
+        </h1>
+        <div className="mt-3 h-px w-[min(26rem,80%)] bg-gradient-to-r from-transparent via-brand/40 to-transparent" />
+        <p className="mt-3 text-[clamp(0.66rem,0.6rem+0.4vw,0.9rem)] font-medium tracking-[0.22em] text-muted uppercase">Relive history through virtual reality</p>
+        <ul className="mt-[clamp(1rem,2.5vw,1.5rem)] grid w-full max-w-2xl grid-cols-3 divide-x divide-brand/15">
+          {PILLARS.map((p) => (
+            <li key={p.title} className="flex flex-col items-center px-2">
+              <span className="grid size-[clamp(2.25rem,1.9rem+1.4vw,3rem)] place-items-center rounded-full border-2 border-brand bg-white text-brand shadow-sm">
+                <Icon name={p.icon} size={20} />
+              </span>
+              <span className="mt-1.5 font-display text-[clamp(0.75rem,0.68rem+0.4vw,0.95rem)] font-semibold tracking-[0.12em] text-navy uppercase">{p.title}</span>
+              <span className="text-[clamp(0.6rem,0.56rem+0.25vw,0.75rem)] tracking-[0.1em] text-muted uppercase">{p.text}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
