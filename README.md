@@ -22,7 +22,7 @@ Every push to `main` is built and published to **GitHub Pages** by `.github/work
 
 ## Pages
 
-- **Home**: the logo, a banner (tagline, a curved row of views, and Explore / Visit / Feel), a card for every 360° view, and a short "how to watch" box.
+- **Home**: the logo, a small banner, a card for every 360° view, and a short "how to watch" box.
 - **Watch** (`/videos/<slug>`): the 360° player, details, share/embed and "Up next".
 - **Embed** (`/embed/<slug>`): a chrome-less player for other websites' `<iframe>`s.
 
