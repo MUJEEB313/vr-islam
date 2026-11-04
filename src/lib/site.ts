@@ -12,9 +12,9 @@ const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://example.com";
 /** Site-wide settings. Rename the site here. */
 export const site = {
   name: "VR Islam",
-  tagline: "Islamic heritage in 360° and VR",
+  tagline: "Experience Islam beyond imagination",
   description:
-    "Watch 360° and VR views of Masjid al-Haram, Masjid an-Nabawi, Al-Aqsa, the great mosques of the world and the journey of Hajj, in your browser or in a VR headset.",
+    "Relive history through virtual reality. Explore real stories, visit historic places and feel the experience: 360° and VR views of Masjid al-Haram, Masjid an-Nabawi, Al-Aqsa and the great mosques of the world, in your browser or VR headset.",
   /** Scheme + host, e.g. "https://name.github.io". Set NEXT_PUBLIC_SITE_ORIGIN at build time. */
   origin,
   /** Full public URL of the site root, including the base path. */

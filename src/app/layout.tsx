@@ -8,12 +8,13 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: "600" });
 const amiri = Amiri({ variable: "--font-amiri", subsets: ["arabic"], weight: "400" });
 
-const shareImage = asset("/brand/og-image.jpg");
+// A new file name whenever the image changes, so apps that cached the old preview fetch it again.
+const shareImage = asset("/brand/share-v2.jpg");
 
 export const metadata: Metadata = {
   // Origin only: relative URLs below already include the base path.
   metadataBase: new URL(site.origin),
-  title: { default: `${site.name}: Islamic heritage in 360° & VR`, template: `%s · ${site.name}` },
+  title: { default: `${site.name}: Experience Islam Beyond Imagination`, template: `%s · ${site.name}` },
   description: site.description,
   openGraph: { siteName: site.name, type: "website", locale: "en", images: [{ url: shareImage, width: 1200, height: 630 }] },
   twitter: { card: "summary_large_image", images: [shareImage] },

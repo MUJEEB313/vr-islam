@@ -1,6 +1,6 @@
 # VR Islam
 
-360° and VR views of Islamic heritage: Masjid al-Haram, Masjid an-Nabawi, Al-Aqsa, great mosques of the world and the journey of Hajj. Views play in the browser on desktop and phones (drag or gyroscope) and in VR headsets via WebXR (Meta Quest, Vision Pro, Pico).
+**Experience Islam beyond imagination**: relive history through virtual reality. 360° and VR views of Masjid al-Haram, Masjid an-Nabawi, Jannat al-Baqi', Al-Aqsa, great mosques of the world and the journey of Hajj. Views play in the browser on desktop and phones (drag or gyroscope) and in VR headsets via WebXR (Meta Quest, Vision Pro, Pico).
 
 Built with Next.js 15 (App Router), TypeScript, Tailwind CSS v4 and three.js.
 
@@ -22,7 +22,7 @@ Every push to `main` is built and published to **GitHub Pages** by `.github/work
 
 ## Pages
 
-- **Home**: the logo, a banner, a card for every 360° view, and VR headset guidelines.
+- **Home**: the logo, a banner (tagline, a curved row of views, and Explore / Visit / Feel), a card for every 360° view, and a short "how to watch" box.
 - **Watch** (`/videos/<slug>`): the 360° player, details, share/embed and "Up next".
 - **Embed** (`/embed/<slug>`): a chrome-less player for other websites' `<iframe>`s.
 

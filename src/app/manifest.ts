@@ -6,7 +6,7 @@ export const dynamic = "force-static";
 /** Makes the site installable ("Add to Home Screen") with an app-like, full-screen launch. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${site.name}: Islamic heritage in 360° & VR`,
+    name: `${site.name}: Experience Islam Beyond Imagination`,
     short_name: site.name,
     description: site.description,
     id: `${basePath}/`,
