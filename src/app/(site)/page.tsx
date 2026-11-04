@@ -23,9 +23,9 @@ export default function HomePage() {
       </section>
 
       <section aria-labelledby="vr-title" className="wrap mt-[var(--section-gap)]">
-        <div className="relative overflow-hidden rounded-3xl border border-line bg-surface p-[clamp(1.25rem,3vw,2.5rem)]">
+        <div className="fold-flat relative overflow-hidden rounded-3xl border border-line bg-surface p-[clamp(1.25rem,3vw,2.5rem)]">
           <div className="bg-girih pointer-events-none absolute inset-0 opacity-[0.05]" />
-          <div className="relative grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
+          <div className="fold-cols relative grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
             <div>
               <p className="mb-2 text-xs font-semibold tracking-[0.2em] text-brand-ink uppercase">App, headset, phone or computer</p>
               <h2 id="vr-title" className="t-section">

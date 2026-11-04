@@ -46,7 +46,8 @@ export default async function WatchPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      <div className="wrap pt-4 pb-5 short:pt-2 short:pb-3">
+      <div className="watch-page">
+      <div className="watch-title wrap fold-left pt-4 pb-5 short:pt-2 short:pb-3">
         <Link href="/#views" className="-my-2 mb-2 inline-flex h-11 items-center gap-1 text-sm text-muted hover:text-brand-ink">
           <Icon name="chevronLeft" size={16} /> All 360° videos
         </Link>
@@ -113,6 +114,7 @@ export default async function WatchPage({ params }: Props) {
             ))}
           </ul>
         </aside>
+      </div>
       </div>
       </div>
       </div>

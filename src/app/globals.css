@@ -30,6 +30,9 @@
   --navy: #00193f;
   color-scheme: light;
 
+  /* Height of the logo header (logo + padding + border), for layouts that must fit beneath it. */
+  --header-h: calc(4rem + 1.5rem + 1px);
+
   /* Vertical space between page sections. */
   --section-gap: clamp(2.5rem, 2rem + 2.5vw, 4rem);
 
@@ -40,6 +43,7 @@
 @media (min-width: 40rem) {
   :root {
     --gutter: max(1.5rem, env(safe-area-inset-left), env(safe-area-inset-right));
+    --header-h: calc(5rem + 1.5rem + 1px);
   }
 }
 
@@ -191,7 +195,8 @@ body {
   @media (orientation: portrait) {
     .watch-frame {
       aspect-ratio: 1 / 1;
-      max-height: 60dvh;
+      /* Small phones: shorter, so the logo, title and player all fit on screen. */
+      max-height: max(15rem, min(60dvh, calc(100dvh - 19rem)));
     }
   }
   @media (orientation: portrait) and (min-width: 40rem) {
@@ -227,6 +232,25 @@ body {
     grid-template-columns: calc(var(--seg-l) - var(--gutter) * 2) calc(var(--seg-r) - var(--gutter) * 2);
     column-gap: calc(var(--hinge) + var(--gutter) * 2);
   }
+  /* Centred blocks (logo, banner, titles) sit on the left screen instead of across the hinge. */
+  .fold-left {
+    max-width: var(--seg-l);
+    margin-left: 0;
+    margin-right: auto;
+  }
+  /* Two-part areas put one part on each screen. */
+  .fold-cols {
+    display: grid;
+    grid-template-columns: calc(var(--seg-l) - var(--gutter) * 2) calc(var(--seg-r) - var(--gutter) * 2);
+    column-gap: calc(var(--hinge) + var(--gutter) * 2);
+  }
+  /* A boxed section loses its frame so the box doesn't span the hinge. */
+  .fold-flat {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
   /* Watch: player on one screen, details on the other. */
   .watch {
     display: grid;
@@ -254,13 +278,28 @@ body {
     --seg-top: env(viewport-segment-height 0 0);
     --hinge-y: calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0));
   }
-  .watch-frame {
-    aspect-ratio: auto;
-    height: var(--seg-top);
-    max-height: none;
+  /* Laptop posture: the player fills the top screen under the logo; title and details start below the fold. */
+  .watch-page {
+    display: flex;
+    flex-direction: column;
+  }
+  .watch {
+    display: contents;
   }
   .watch-stage {
+    order: 1;
     margin-bottom: var(--hinge-y);
+  }
+  .watch-title {
+    order: 2;
+  }
+  .watch-details {
+    order: 3;
+  }
+  .watch-frame {
+    aspect-ratio: auto;
+    height: calc(var(--seg-top) - var(--header-h));
+    max-height: none;
   }
 }
 

@@ -6,7 +6,7 @@ import { Logo } from "./Logo";
 export function SiteHeader() {
   return (
     <header className="border-b border-line bg-surface pt-[env(safe-area-inset-top)]">
-      <div className="wrap flex justify-center py-3 short:py-1.5">
+      <div className="wrap fold-left flex justify-center py-3 short:py-1.5">
         <Link href="/" aria-label={`${site.name} home`} className="rounded-lg">
           <Logo className="h-16 sm:h-20 short:h-12" />
         </Link>

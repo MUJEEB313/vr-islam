@@ -9,7 +9,7 @@ export function SiteFooter() {
   const { phone, phoneHref, email, youtube, youtubeHandle } = site.contact;
   return (
     <footer className="mt-[var(--section-gap)] border-t border-line bg-surface pb-[env(safe-area-inset-bottom)]">
-      <div className="wrap grid gap-x-10 gap-y-10 py-12 sm:grid-cols-[auto_auto] sm:justify-between lg:flex lg:justify-between">
+      <div className="wrap fold-cols grid gap-x-10 gap-y-10 py-12 sm:grid-cols-[auto_auto] sm:justify-between lg:flex lg:justify-between">
         <div>
           <Logo className="h-16" />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
@@ -66,7 +66,7 @@ export function SiteFooter() {
         </FooterCol>
       </div>
       <p className="border-t border-line py-4 text-center text-xs text-muted">
-        © {new Date().getFullYear()} {site.name}
+        <span className="fold-left block">© {new Date().getFullYear()} {site.name}</span>
       </p>
     </footer>
   );
