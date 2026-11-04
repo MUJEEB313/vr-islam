@@ -2,7 +2,10 @@ import { P, project, rng } from "./geometry";
 import { domePaint, lit, LAMP, SKIES, WARM_GLOW, type SkyPalette } from "./palette";
 import type {
   CourtyardSpec,
+  DomeColor,
+  FacadeStyle,
   HallSpec,
+  MinaretColor,
   Paint,
   PlainSpec,
   RoadSpec,
@@ -87,6 +90,8 @@ function ellipse(p: P, cx: number, cy: number, rx: number, ry: number) {
 const FACADE = {
   tile: { wall: "#2b6c8c", recess: "#143a50", trim: "#d9b45c", band: "#38a7b3" },
   stone: { wall: "#d6c3a0", recess: "#7f6a49", trim: "#c9a24f", band: "#8c7350" },
+  marble: { wall: "#eeece6", recess: "#a2a8ae", trim: "#cdb27a", band: "#c9d0d8" },
+  sandstone: { wall: "#a64a30", recess: "#5c2617", trim: "#f1e9de", band: "#e9dccb" },
 };
 
 function recessPaint(style: keyof typeof FACADE, pal: SkyPalette): { fill: Paint; glow?: Shape["glow"] } {
@@ -98,10 +103,11 @@ function recessPaint(style: keyof typeof FACADE, pal: SkyPalette): { fill: Paint
 function courtyard(spec: CourtyardSpec, pal: SkyPalette, R: Rand): Shape[] {
   const out: Shape[] = [];
   const main = spec.shrines[0]?.lon ?? 180;
+  for (const lon of spec.towers ?? []) out.push(...minaret(lon, 0.6, 30, 1.3, spec.arcade === "marble" ? "white" : "stone", pal));
   out.push(...arcadeRing(spec, pal, main));
-  for (const d of spec.sideDomes ?? []) out.push(...sideMosque(d.lon, d.scale ?? 0.8, pal));
+  for (const d of spec.sideDomes ?? []) out.push(...sideMosque(d.lon, d.scale ?? 0.8, pal, d));
   for (const s of spec.shrines) out.push(...shrine(s, pal));
-  out.push(...courtyardProps(pal, R));
+  out.push(...courtyardProps(spec, pal, R));
   return out;
 }
 
@@ -126,30 +132,31 @@ function arcadeRing(spec: CourtyardSpec, pal: SkyPalette, mainLon: number): Shap
   for (const g of gates) {
     out.push({ kind: "path", d: new P().rect(g - 4.2, -12.5, 8.4, 13.8).toString(), fill: lit(f.wall, pal, 1.05) });
     out.push({ kind: "path", d: new P().rect(g - 4.2, -13.1, 8.4, 0.6).toString(), fill: lit(f.trim, pal, 1.1) });
-    out.push({ kind: "path", d: new P().arch(g, 1.3, 5.4, 11.6).toString(), fill: domePaint("gold", -11, 1, pal) });
+    out.push({ kind: "path", d: new P().arch(g, 1.3, 5.4, 11.6).toString(), fill: lit(f.trim, pal, 1.05) });
     out.push({ kind: "path", d: new P().arch(g, 1.3, 4.2, 10.2).toString(), ...recessPaint(spec.arcade, pal) });
   }
 
-  if (spec.clockTowerLon !== undefined) {
-    const c = spec.clockTowerLon;
-    out.push({ kind: "path", d: new P().rect(c - 2.4, -24, 4.8, 11.5).toString(), fill: lit(f.wall, pal, 1.05) });
-    out.push({ kind: "circle", x: c, y: -18.6, r: 1.7, fill: domePaint("gold", -20.5, -16.7, pal) });
-    out.push({ kind: "circle", x: c, y: -18.6, r: 1.35, fill: "#f6f0de", glow: pal.lit ? { color: "rgba(255,240,200,0.9)", blur: 1.5 } : undefined });
-    out.push({ kind: "path", d: new P().M(c, -18.6).L(c, -19.6).M(c, -18.6).L(c + 0.7, -18.3).toString(), stroke: "#2a2015", lineWidth: 0.16 });
-    out.push({ kind: "path", d: new P().dome(c, -24, 5, 5.5).toString(), fill: domePaint("gold", -29.5, -24, pal) });
-    out.push({ kind: "path", d: new P().rect(c - 0.08, -31.5, 0.16, 2.2).toString(), fill: domePaint("gold", -31.5, -29, pal) });
+  if (spec.arcadeDomes) {
+    const domes = new P();
+    for (let x = 2; x < 360; x += 4) if (!nearGate(x)) domes.dome(x, -8.9, 2.6, 1.6);
+    out.push({ kind: "path", d: domes.toString(), fill: domePaint("lead", -10.5, -8.9, pal) });
   }
   return out;
 }
 
-function minaret(x: number, base: number, height: number, w: number, color: ShrineOpts["minaretColor"], pal: SkyPalette): Shape[] {
+const MINARET_STOPS: Record<Exclude<MinaretColor, "gold">, [string, string]> = {
+  tile: ["#3fb0bf", "#1d5f7a"],
+  stone: ["#efe4cf", "#bba57e"],
+  white: ["#ffffff", "#c9ced4"],
+  sandstone: ["#c2603f", "#7d3220"],
+};
+
+function minaret(x: number, base: number, height: number, w: number, color: MinaretColor, pal: SkyPalette): Shape[] {
   const top = base - height;
   const paint: Paint =
     color === "gold"
       ? domePaint("gold", top, base, pal)
-      : color === "tile"
-        ? { y0: top, y1: base, stops: [[0, lit("#3fb0bf", pal)], [1, lit("#1d5f7a", pal)]] }
-        : { y0: top, y1: base, stops: [[0, lit("#efe4cf", pal)], [1, lit("#bba57e", pal)]] };
+      : { y0: top, y1: base, stops: [[0, lit(MINARET_STOPS[color][0], pal)], [1, lit(MINARET_STOPS[color][1], pal)]] };
   const balcony = base - height * 0.7;
   const p = new P()
     .M(x - w / 2, base)
@@ -164,7 +171,7 @@ function minaret(x: number, base: number, height: number, w: number, color: Shri
   out.push({
     kind: "path",
     d: new P().rect(x - w * 0.8, balcony - w * 0.5, w * 1.6, w * 0.5).rect(x - w * 0.6, base - height * 0.83, w * 1.2, w * 0.35).toString(),
-    fill: pal.lit ? LAMP : domePaint("gold", balcony - w, balcony, pal),
+    fill: pal.lit ? LAMP : lit(color === "sandstone" ? "#f1e9de" : "#d9cdb4", pal),
     glow: pal.lit ? WARM_GLOW : undefined,
   });
   return out;
@@ -225,15 +232,54 @@ function shrine(o: ShrineOpts, pal: SkyPalette): Shape[] {
   return out;
 }
 
-function sideMosque(x: number, s: number, pal: SkyPalette): Shape[] {
+function sideMosque(
+  x: number,
+  s: number,
+  pal: SkyPalette,
+  { color = "turquoise", facade = "tile", minarets = true }: { color?: DomeColor; facade?: FacadeStyle; minarets?: boolean } = {},
+): Shape[] {
+  const f = FACADE[facade];
   const out: Shape[] = [];
   const top = -12 * s;
-  out.push({ kind: "path", d: new P().rect(x - 10 * s, top, 20 * s, 1.2 - top).toString(), fill: lit(FACADE.tile.wall, pal) });
-  out.push({ kind: "path", d: new P().rect(x - 4.6 * s, top - 4 * s, 9.2 * s, 4.2 * s).toString(), fill: lit("#2f8aa0", pal) });
-  out.push({ kind: "path", d: new P().dome(x, top - 4 * s, 10.5 * s, 12 * s).toString(), fill: domePaint("turquoise", top - 16 * s, top - 4 * s, pal) });
-  out.push({ kind: "path", d: new P().arch(x, 1.2, 8 * s, 15 * s).toString(), fill: lit("#1c5a78", pal) });
-  out.push({ kind: "path", d: new P().arch(x, 1.2, 5.6 * s, 11.5 * s).toString(), ...recessPaint("tile", pal) });
-  for (const side of [-1, 1]) out.push(...minaret(x + side * 6.4 * s, 1.2, 34 * s, 1.7 * s, "tile", pal));
+  out.push({ kind: "path", d: new P().rect(x - 10 * s, top, 20 * s, 1.2 - top).toString(), fill: lit(f.wall, pal) });
+  out.push({ kind: "path", d: new P().rect(x - 4.6 * s, top - 4 * s, 9.2 * s, 4.2 * s).toString(), fill: lit(f.band, pal) });
+  out.push({ kind: "path", d: new P().dome(x, top - 4 * s, 10.5 * s, 12 * s).toString(), fill: domePaint(color, top - 16 * s, top - 4 * s, pal) });
+  out.push({ kind: "path", d: new P().arch(x, 1.2, 8 * s, 15 * s).toString(), fill: lit(f.trim, pal, 0.9) });
+  out.push({ kind: "path", d: new P().arch(x, 1.2, 5.6 * s, 11.5 * s).toString(), ...recessPaint(facade, pal) });
+  if (minarets) for (const side of [-1, 1]) out.push(...minaret(x + side * 6.4 * s, 1.2, 34 * s, 1.7 * s, facade === "tile" ? "tile" : "white", pal));
+  return out;
+}
+
+/** The Kaaba, seen from the courtyard: black kiswa, gold band and door. Two faces are visible. */
+function kaaba(pal: SkyPalette, ground: number): Shape[] {
+  const cx = 0;
+  const cz = -34;
+  const half = 6;
+  const h = 13;
+  const a = (35 * Math.PI) / 180;
+  const corner = (u: number, v: number): [number, number] => [cx + u * Math.cos(a) - v * Math.sin(a), cz + u * Math.sin(a) + v * Math.cos(a)];
+  const front: [number, number][] = [corner(-half, half), corner(half, half)];
+  const side: [number, number][] = [corner(half, half), corner(half, -half)];
+  const face = (e: [number, number][], y0: number, y1: number, t0 = 0, t1 = 1): [number, number, number][] => {
+    const at = (t: number): [number, number] => [e[0][0] + (e[1][0] - e[0][0]) * t, e[0][1] + (e[1][1] - e[0][1]) * t];
+    const [p, q] = [at(t0), at(t1)];
+    return [
+      [p[0], ground + y0, p[1]],
+      [q[0], ground + y0, q[1]],
+      [q[0], ground + y1, q[1]],
+      [p[0], ground + y1, p[1]],
+    ];
+  };
+  const kiswa = lit("#16151a", pal, pal.lit ? 2.2 : 1.2);
+  const gold = pal.lit ? "#e7c46a" : lit("#d4ad52", pal, 1.1);
+  const out: Shape[] = [];
+  out.push({ kind: "path", d: new P().poly3(face(side, 0, h), 8).toString(), fill: lit("#0e0d11", pal, pal.lit ? 2 : 1) });
+  out.push({ kind: "path", d: new P().poly3(face(front, 0, h), 8).toString(), fill: kiswa });
+  for (const e of [side, front]) out.push({ kind: "path", d: new P().poly3(face(e, h * 0.66, h * 0.66 + 0.95), 8).toString(), fill: gold, glow: pal.lit ? { color: "rgba(231,196,106,0.6)", blur: 0.6 } : undefined });
+  // The door, raised above the ground on the front face.
+  out.push({ kind: "path", d: new P().poly3(face(front, 2.2, 5.4, 0.62, 0.8), 4).toString(), fill: gold, glow: pal.lit ? { color: "rgba(231,196,106,0.6)", blur: 0.6 } : undefined });
+  // White marble base (shadharwan).
+  for (const e of [side, front]) out.push({ kind: "path", d: new P().poly3(face(e, 0, 0.35), 6).toString(), fill: lit("#e9e6df", pal, pal.lit ? 1.6 : 1) });
   return out;
 }
 
@@ -254,6 +300,14 @@ function person(x: number, z: number, h: number, color: string, ground: number, 
     .Z();
   ellipse(p, lon, yTop + head, head * 0.85, head);
   return { kind: "path", d: p.toString(), fill: color };
+}
+
+/** Pilgrims in ihram: mostly white, with women in black and some grey. */
+function ihramColor(R: Rand, pal: SkyPalette) {
+  const r = R();
+  if (r < 0.7) return lit("#f4f2ec", pal, pal.lit ? 1.5 : 1);
+  if (r < 0.93) return lit("#151318", pal, 1.4);
+  return lit("#9a9a96", pal);
 }
 
 function crowdColor(R: Rand, pal: SkyPalette) {
@@ -281,9 +335,23 @@ function lampPost(x: number, z: number, h: number, pal: SkyPalette, ground: numb
   ];
 }
 
-function courtyardProps(pal: SkyPalette, R: Rand): Shape[] {
+function courtyardProps(spec: CourtyardSpec, pal: SkyPalette, R: Rand): Shape[] {
   const ground = -EYE;
   const items: { d: number; shapes: Shape[] }[] = [];
+  if (spec.kaaba) {
+    items.push({ d: 34, shapes: kaaba(pal, ground) });
+    // Pilgrims circling the Kaaba (tawaf), thinning towards the viewer.
+    for (let i = 0; i < 420; i++) {
+      const a = R() * Math.PI * 2;
+      const r = 9.5 + Math.pow(R(), 0.8) * 24;
+      const x = Math.sin(a) * r;
+      const z = -34 + Math.cos(a) * r;
+      if (Math.hypot(x, z) < 3.5) continue;
+      items.push({ d: Math.hypot(x, z), shapes: [person(x, z, 1.55 + R() * 0.2, ihramColor(R, pal), ground)] });
+    }
+    items.sort((a, b) => b.d - a.d);
+    return items.flatMap((i) => i.shapes);
+  }
   for (const side of [-1, 1]) {
     for (let z = -8; z >= -44; z -= 9) items.push({ d: Math.hypot(6, z), shapes: lampPost(side * 6.5, z, 4.2, pal, ground) });
     for (let z = 10; z <= 40; z += 10) items.push({ d: Math.hypot(6, z), shapes: lampPost(side * 6.5, z, 4.2, pal, ground) });
@@ -302,8 +370,6 @@ function courtyardProps(pal: SkyPalette, R: Rand): Shape[] {
 
 /* ----------------------------------------------------------------- road */
 
-const FLAG_COLORS = ["#0d0d0f", "#1d7a46", "#a3192a", "#0d0d0f", "#1d7a46"];
-const TENT_COLORS = ["#f2efe6", "#1d7a46", "#16161a", "#a3192a", "#f2efe6", "#2a5b8a"];
 
 function palm(x: number, z: number, h: number, pal: SkyPalette, ground: number, R: Rand): Shape[] {
   const [lon, yTop] = project(x, ground + h, z);
@@ -362,38 +428,37 @@ function tent(x: number, z: number, side: number, color: string, pal: SkyPalette
   ];
 }
 
-function flag(x: number, z: number, color: string, pal: SkyPalette, ground: number): Shape[] {
-  const top = ground + 5.2;
-  const w = 0.06;
-  return [
-    { kind: "path", d: new P().poly3([[x - w, ground, z], [x + w, ground, z], [x + w, top, z], [x - w, top, z]], 2).toString(), fill: lit("#6b6150", pal) },
-    { kind: "path", d: new P().poly3([[x, top, z], [x, top, z - 1.5], [x, top - 1, z - 1.6], [x, top - 1, z]], 4).toString(), fill: lit(color, pal, 1.1) },
-  ];
+/** Bare rocky hills around the horizon, as seen from the valleys near Makkah. */
+function mountains(pal: SkyPalette, R: Rand): Shape[] {
+  const out: Shape[] = [];
+  for (const [layer, height, colour] of [
+    [0, 7, "#8a7058"],
+    [1, 4.5, "#a08468"],
+  ] as const) {
+    const p = new P().M(0, 1);
+    let y = -height * 0.5;
+    for (let x = 0; x <= 360; x += 2) {
+      y = Math.max(-height, Math.min(-0.6, y + (R() - 0.5) * (layer ? 1.6 : 2.4)));
+      p.L(x, y);
+    }
+    p.L(360, 1).Z();
+    out.push({ kind: "path", d: p.toString(), fill: lit(colour, pal) });
+  }
+  return out;
 }
 
 function road(spec: RoadSpec, pal: SkyPalette, R: Rand): Shape[] {
   const ground = -EYE;
   const items: { d: number; shapes: Shape[] }[] = [];
-  // The golden dome of Karbala on the far horizon, straight ahead.
-  const horizon = shrine({ lon: 180, scale: 0.16, dome: "gold", minaretPairs: 1, minaretColor: "gold", facade: "tile", goldenIwan: true }, pal);
-  items.push({ d: 10000, shapes: horizon });
-  for (let i = 0; i < 80; i++) {
-    const side = R() < 0.5 ? -1 : 1;
-    const x = side * (22 + R() * 90);
-    const z = (R() - 0.5) * 600;
-    items.push({ d: Math.hypot(x, z), shapes: palm(x, z, 8 + R() * 6, pal, ground, R) });
-  }
-  let t = 0;
-  for (let z = -230; z <= 90; z += 15) {
+  items.push({ d: 10000, shapes: mountains(pal, R) });
+  // Mina: rows of identical white tents on both sides of the road.
+  for (let z = -230; z <= 90; z += 9) {
     for (const side of [-1, 1]) {
-      const x = side * (7.5 + R() * 1.5);
-      items.push({ d: Math.hypot(x, z), shapes: tent(x, z, side, TENT_COLORS[t++ % TENT_COLORS.length], pal, ground) });
+      for (let row = 0; row < 3; row++) {
+        const x = side * (7.5 + row * 6);
+        items.push({ d: Math.hypot(x, z), shapes: tent(x, z, side, "#f4f2ec", pal, ground) });
+      }
     }
-  }
-  let f = 0;
-  for (let z = -200; z <= 80; z += 9) {
-    if (Math.abs(z) < 10) continue;
-    for (const side of [-1, 1]) items.push({ d: Math.hypot(4.7, z), shapes: flag(side * 4.7, z, FLAG_COLORS[f++ % FLAG_COLORS.length], pal, ground) });
   }
   if (pal.lit) {
     for (let z = -210; z <= 90; z += 28) {
@@ -404,7 +469,7 @@ function road(spec: RoadSpec, pal: SkyPalette, R: Rand): Shape[] {
     const ahead = R() < 0.78;
     const z = ahead ? -(2.5 + Math.pow(R(), 1.6) * 230) : 3 + R() * 70;
     const x = (R() - 0.5) * 6.4;
-    items.push({ d: Math.hypot(x, z), shapes: [person(x, z, 1.5 + R() * 0.3, crowdColor(R, pal), ground)] });
+    items.push({ d: Math.hypot(x, z), shapes: [person(x, z, 1.5 + R() * 0.3, ihramColor(R, pal), ground)] });
   }
   items.sort((a, b) => b.d - a.d);
   return items.flatMap((i) => i.shapes);
@@ -412,98 +477,71 @@ function road(spec: RoadSpec, pal: SkyPalette, R: Rand): Shape[] {
 
 /* ---------------------------------------------------------------- plain */
 
-function bedouinTent(x: number, z: number, pal: SkyPalette, ground: number, R: Rand): Shape[] {
-  const w = 5 + R() * 3;
-  const d = 3.5;
-  const h = 2.4;
-  const a = R() * Math.PI;
-  const ux = Math.cos(a) * w * 0.5;
-  const uz = Math.sin(a) * w * 0.5;
-  const vx = -Math.sin(a) * d * 0.5;
-  const vz = Math.cos(a) * d * 0.5;
-  const body: [number, number, number][] = [
-    [x - ux - vx, ground, z - uz - vz],
-    [x + ux - vx, ground, z + uz - vz],
-    [x + ux * 0.8, ground + h, z + uz * 0.8],
-    [x - ux * 0.8, ground + h, z - uz * 0.8],
+/** A rounded hill straight ahead with a white pillar on its summit (Jabal al-Rahmah, Arafat). */
+function pillarHill(pal: SkyPalette): Shape[] {
+  const x = 180;
+  const hill = new P().M(x - 26, 1.2).C(x - 16, 0.4, x - 9, -8.4, x, -9).C(x + 9, -8.4, x + 16, 0.4, x + 26, 1.2).Z();
+  return [
+    { kind: "path", d: hill.toString(), fill: lit("#9a7b5c", pal) },
+    { kind: "path", d: new P().rect(x - 0.6, -15.2, 1.2, 6.4).toString(), fill: lit("#f4f2ec", pal, 1.1) },
   ];
-  const body2: [number, number, number][] = [
-    [x - ux + vx, ground, z - uz + vz],
-    [x + ux + vx, ground, z + uz + vz],
-    [x + ux * 0.8, ground + h, z + uz * 0.8],
-    [x - ux * 0.8, ground + h, z - uz * 0.8],
+}
+
+/** City skyline with a green-domed mosque and four minarets, far away. */
+function distantMosque(x: number, pal: SkyPalette, R: Rand): Shape[] {
+  const s = 0.35;
+  const skyline = new P();
+  for (let dx = -30; dx < 30; dx += 2.5 + R() * 2) skyline.rect(x + dx, -(1 + R() * 3), 2.4, 4.5);
+  const out: Shape[] = [
+    { kind: "path", d: skyline.toString(), fill: lit("#cdbb98", pal, 0.95) },
+    { kind: "path", d: new P().rect(x - 14 * s, -10 * s, 28 * s, 10 * s + 1).toString(), fill: lit("#e7dcc6", pal) },
+    { kind: "path", d: new P().rect(x - 3 * s, -13 * s, 6 * s, 3.2 * s).toString(), fill: lit("#2f8a5c", pal) },
+    { kind: "path", d: new P().dome(x, -13 * s, 7 * s, 8 * s).toString(), fill: domePaint("green", -21 * s, -13 * s, pal) },
+  ];
+  for (const dx of [-17, -9, 9, 17]) out.push(...minaret(x + dx * s, 1, 34 * s, 1.5 * s, "white", pal));
+  return out;
+}
+
+/** A low stone wall all around, with an arched gate straight ahead. */
+function perimeterWall(pal: SkyPalette): Shape[] {
+  return [
+    { kind: "path", d: new P().rect(0, -1.6, 360, 3.2).toString(), fill: lit("#d8c8a8", pal) },
+    { kind: "path", d: new P().rect(0, -1.8, 360, 0.25).toString(), fill: lit("#b8a67f", pal) },
+    { kind: "path", d: new P().arch(180, 1.6, 2.4, 3.2).toString(), fill: lit("#5a4a32", pal) },
+  ];
+}
+
+/** A plain grave: a low mound with a small upright stone. */
+function grave(x: number, z: number, pal: SkyPalette, ground: number): Shape[] {
+  const mound: [number, number, number][] = [
+    [x - 0.45, ground, z],
+    [x + 0.45, ground, z],
+    [x + 0.3, ground + 0.22, z],
+    [x - 0.3, ground + 0.22, z],
+  ];
+  const stone: [number, number, number][] = [
+    [x - 0.08, ground, z - 0.6],
+    [x + 0.08, ground, z - 0.6],
+    [x + 0.08, ground + 0.45, z - 0.6],
+    [x - 0.08, ground + 0.45, z - 0.6],
   ];
   return [
-    { kind: "path", d: new P().poly3(body2, 4).toString(), fill: lit("#3a2c22", pal) },
-    { kind: "path", d: new P().poly3(body, 4).toString(), fill: lit("#5a4434", pal) },
+    { kind: "path", d: new P().poly3(mound, 2).toString(), fill: lit("#b9a37e", pal, 0.9) },
+    { kind: "path", d: new P().poly3(stone, 2).toString(), fill: lit("#8d8170", pal) },
   ];
 }
 
 function plain(spec: PlainSpec, pal: SkyPalette, R: Rand): Shape[] {
   const ground = -EYE;
   const items: { d: number; shapes: Shape[] }[] = [];
-  if (spec.distantMosqueLon !== undefined) {
-    const x = spec.distantMosqueLon;
-    const s = 0.35;
-    const skyline = new P();
-    for (let dx = -30; dx < 30; dx += 2.5 + R() * 2) skyline.rect(x + dx, -(1 + R() * 3), 2.4, 4.5);
-    items.push({ d: 5000, shapes: [{ kind: "path", d: skyline.toString(), fill: lit("#cdbb98", pal, 0.95) }] });
-    const mosque: Shape[] = [
-      { kind: "path", d: new P().rect(x - 14 * s, -10 * s, 28 * s, 10 * s + 1).toString(), fill: lit("#e7dcc6", pal) },
-      { kind: "path", d: new P().rect(x - 3 * s, -13 * s, 6 * s, 3.2 * s).toString(), fill: lit("#2f8a5c", pal) },
-      { kind: "path", d: new P().dome(x, -13 * s, 7 * s, 8 * s).toString(), fill: domePaint("green", -21 * s, -13 * s, pal) },
-    ];
-    for (const dx of [-17, -9, 9, 17]) mosque.push(...minaret(x + dx * s, 1, 34 * s, 1.5 * s, "stone", pal));
-    items.push({ d: 4000, shapes: mosque });
-  }
-  for (let i = 0; i < (spec.river ? 70 : 20); i++) {
-    const x = (R() - 0.5) * 300;
-    const z = spec.river ? -(85 + R() * 120) : (R() < 0.5 ? -1 : 1) * (80 + R() * 200);
-    items.push({ d: Math.hypot(x, z), shapes: palm(x, z, 8 + R() * 6, pal, ground, R) });
-  }
-  if (spec.wall) {
-    const p = new P().rect(0, -1.6, 360, 3.2);
-    const gate = new P().arch(180, 1.6, 2.4, 3.2);
-    items.push({
-      d: 60,
-      shapes: [
-        { kind: "path", d: p.toString(), fill: lit("#d8c8a8", pal) },
-        { kind: "path", d: new P().rect(0, -1.8, 360, 0.25).toString(), fill: lit("#b8a67f", pal) },
-        { kind: "path", d: gate.toString(), fill: lit("#5a4a32", pal) },
-      ],
-    });
-  }
-  for (let i = 0; i < (spec.tents ?? 0); i++) {
-    const a = (145 + R() * 70) * (Math.PI / 180);
-    const r = 16 + R() * 38;
-    const x = -Math.sin(a) * r;
-    const z = Math.cos(a) * r;
-    items.push({ d: r, shapes: bedouinTent(x, z, pal, ground, R) });
-  }
+  if (spec.mountains) items.push({ d: 10000, shapes: mountains(pal, R) });
+  if (spec.pillarHill) items.push({ d: 5000, shapes: pillarHill(pal) });
+  if (spec.distantMosqueLon !== undefined) items.push({ d: 5000, shapes: distantMosque(spec.distantMosqueLon, pal, R) });
+  if (spec.wall) items.push({ d: 60, shapes: perimeterWall(pal) });
   for (let i = 0; i < (spec.graves ?? 0); i++) {
     const a = R() * Math.PI * 2;
     const r = 3 + Math.pow(R(), 0.7) * 50;
-    const x = Math.sin(a) * r;
-    const z = Math.cos(a) * r;
-    const mound: [number, number, number][] = [
-      [x - 0.45, ground, z],
-      [x + 0.45, ground, z],
-      [x + 0.3, ground + 0.22, z],
-      [x - 0.3, ground + 0.22, z],
-    ];
-    const stone: [number, number, number][] = [
-      [x - 0.08, ground, z - 0.6],
-      [x + 0.08, ground, z - 0.6],
-      [x + 0.08, ground + 0.45, z - 0.6],
-      [x - 0.08, ground + 0.45, z - 0.6],
-    ];
-    items.push({
-      d: r,
-      shapes: [
-        { kind: "path", d: new P().poly3(mound, 2).toString(), fill: lit("#b9a37e", pal, 0.9) },
-        { kind: "path", d: new P().poly3(stone, 2).toString(), fill: lit("#8d8170", pal) },
-      ],
-    });
+    items.push({ d: r, shapes: grave(Math.sin(a) * r, Math.cos(a) * r, pal, ground) });
   }
   if (spec.graves) {
     for (let i = 0; i < 14; i++) {
@@ -511,6 +549,16 @@ function plain(spec: PlainSpec, pal: SkyPalette, R: Rand): Shape[] {
       const r = 8 + R() * 40;
       items.push({ d: r, shapes: [person(Math.sin(a) * r, Math.cos(a) * r, 1.6 + R() * 0.15, crowdColor(R, pal), ground)] });
     }
+  }
+  for (let i = 0; i < 26; i++) {
+    const x = (R() - 0.5) * 300;
+    const z = (R() < 0.5 ? -1 : 1) * (60 + R() * 200);
+    items.push({ d: Math.hypot(x, z), shapes: palm(x, z, 6 + R() * 5, pal, ground, R) });
+  }
+  for (let i = 0; i < (spec.crowd ?? 0); i++) {
+    const a = R() * Math.PI * 2;
+    const r = 3 + Math.pow(R(), 0.7) * 70;
+    items.push({ d: r, shapes: [person(Math.sin(a) * r, Math.cos(a) * r, 1.5 + R() * 0.3, ihramColor(R, pal), ground)] });
   }
   items.sort((a, b) => b.d - a.d);
   return items.flatMap((i) => i.shapes);
@@ -543,7 +591,7 @@ function hall(spec: HallSpec, R: Rand): Shape[] {
   walls.forEach((w, i) => {
     const y = -Math.atan2(2.95 - HALL_EYE, w.dist) * (180 / Math.PI);
     const size = Math.atan2(0.8, w.dist) * (180 / Math.PI);
-    out.push({ kind: "text", x: w.lon, y, text: spec.banners[i], size, fill: "#f1d27a", glow: { color: "rgba(241,210,122,0.6)", blur: size * 0.12 } });
+    out.push({ kind: "text", x: w.lon, y, text: spec.banners[i], size, fill: "#145a3e" });
   });
   // Minbar against the front wall.
   const mz = -HALL.hz + 0.05;

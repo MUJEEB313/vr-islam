@@ -66,16 +66,10 @@ function roadGround(x: number, z: number, dist: number): RGB {
   return mix(avg, c, detail(dist, 14, 60));
 }
 
-function plainGround(spec: Extract<SceneSpec, { kind: "plain" }>, x: number, z: number, dist: number, horizon: RGB): RGB {
+function plainGround(x: number, z: number, dist: number, pale: boolean): RGB {
   const n = noise(x * 0.8, z * 0.8) * 0.18 + noise(x * 5, z * 5) * 0.08;
-  if (spec.river) {
-    if (z < -62 && z > -78) {
-      const ripple = noise(x * 0.6, z * 3) * 0.25;
-      return mix([26, 52, 70], horizon, 0.55 + ripple);
-    }
-    if ((z <= -58 && z >= -62) || (z <= -78 && z >= -86)) return [77 * (0.9 + n), 104 * (0.9 + n), 52 * (0.9 + n)];
-  }
-  const base: RGB = spec.wall ? [216, 199, 165] : [204, 176, 128];
+  // Paler, gravelled ground inside a walled site; open desert sand otherwise.
+  const base: RGB = pale ? [216, 199, 165] : [204, 176, 128];
   return mix(base, [base[0] * (0.88 + n), base[1] * (0.88 + n), base[2] * (0.88 + n)], detail(dist, 8, 60));
 }
 
@@ -115,10 +109,18 @@ function hallSurface(lon: number, tanLat: number): RGB {
     return [232 * coffer * warm * 0.75, 222 * coffer * warm * 0.72, 200 * coffer * 0.68];
   }
   const u = tx < tz ? hzd * t : hxd * t;
-  if (wy < 0.45) return [48, 32, 22];
+  if (wy < 0.15) return [120, 98, 70];
+  // Tiled dado, then plain cream plaster up to the calligraphy band.
+  if (wy < 1.4) {
+    const tu = ((u + 100) % 0.5) / 0.5;
+    const tv = (wy % 0.5) / 0.5;
+    const d = Math.abs(tu - 0.5) + Math.abs(tv - 0.5);
+    return d < 0.32 ? [38, 102, 140] : [232, 236, 236];
+  }
+  if (wy < 1.5) return [184, 146, 63];
   if (wy < 3.4) {
-    const fold = 0.85 + 0.15 * Math.sin(u * 7);
-    return [22 * fold, 20 * fold, 24 * fold];
+    const panel = Math.abs(((u + 100) % 2.2) - 1.1) < 0.85 ? 1 : 0.94;
+    return [233 * panel, 225 * panel, 208 * panel];
   }
   if (wy < 3.52 || (wy > 3.84 && wy < 3.94)) return [184, 146, 63];
   if (wy < 3.84) return [16, 92, 54];
@@ -155,7 +157,7 @@ export function paintGround(spec: SceneSpec, img: Uint8ClampedArray, W: number, 
         const z = cosLon[i] * dist;
         if (spec.kind === "courtyard") c = marble(spec, x, z, dist);
         else if (spec.kind === "road") c = roadGround(x, z, dist);
-        else c = plainGround(spec, x, z, dist, horizon);
+        else c = plainGround(x, z, dist, !!spec.wall);
 
         let r = c[0] * pal.light * pal.tint[0];
         let g = c[1] * pal.light * pal.tint[1];

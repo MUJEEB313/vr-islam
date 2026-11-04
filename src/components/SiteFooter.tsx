@@ -1,54 +1,26 @@
-import Link from "next/link";
-import { collections, shrineShortName, shrines } from "@/content";
 import { site } from "@/lib/site";
+import { Icon } from "./Icons";
 import { Logo } from "./Logo";
 
+/** Simple footer: the logo in the centre, contact details and a copyright line. */
 export function SiteFooter() {
+  const { phone, phoneHref, email } = site.contact;
   return (
-    <footer className="relative mt-24 border-t border-line bg-surface">
-      <div className="bg-girih pointer-events-none absolute inset-0 opacity-[0.04]" />
-      <div className="wrap relative pt-14 pb-[calc(5.5rem+env(safe-area-inset-bottom))] short:pb-8 lg:pb-14 fold-h:pb-24">
-        <p className="arabic mb-10 text-center text-2xl text-brand-ink sm:text-3xl">اللّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّد</p>
-        <div className="fold-cols grid grid-cols-[repeat(auto-fit,minmax(min(100%,13rem),1fr))] gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div>
-            <Logo />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">{site.tagline}. Free and open to everyone, in your browser or VR headset.</p>
-          </div>
-          <FooterCol title="Shrines" links={shrines.map((s) => ({ href: `/shrines/${s.slug}`, label: shrineShortName(s) }))} />
-          <FooterCol title="Collections" links={collections.map((c) => ({ href: `/collections/${c.slug}`, label: c.title }))} />
-          <FooterCol
-            title="Site"
-            links={[
-              { href: "/videos", label: "All videos" },
-              { href: "/calendar", label: "Islamic calendar" },
-              { href: "/how-to-watch", label: "How to watch in VR" },
-              { href: "/saved", label: "Saved" },
-              { href: "/about", label: "About & submit footage" },
-            ]}
-          />
-        </div>
-        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:justify-between">
-          <p>© {new Date().getFullYear()} {site.name}. Made for the lovers of the Ahl al-Bayt (a.s.).</p>
-          <p>Hijri dates follow the Umm al-Qura calendar and may differ locally by a day.</p>
-        </div>
+    <footer className="mt-16 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)]">
+      <div className="wrap flex flex-col items-center gap-4 py-10 text-center">
+        <Logo className="h-14 sm:h-16" />
+        <address className="flex flex-wrap justify-center gap-x-6 text-sm not-italic">
+          <a href={phoneHref} className="inline-flex h-11 items-center gap-2 text-fg/85 transition hover:text-brand-ink">
+            <Icon name="call" size={18} className="text-brand" /> {phone}
+          </a>
+          <a href={`mailto:${email}`} className="inline-flex h-11 items-center gap-2 text-fg/85 transition hover:text-brand-ink">
+            <Icon name="mail" size={18} className="text-brand" /> {email}
+          </a>
+        </address>
+        <p className="text-xs text-muted">
+          © {new Date().getFullYear()} {site.name}
+        </p>
       </div>
     </footer>
-  );
-}
-
-function FooterCol({ title, links }: { title: string; links: { href: string; label: string }[] }) {
-  return (
-    <div>
-      <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] text-brand-ink uppercase">{title}</h2>
-      <ul className="space-y-2">
-        {links.map((l) => (
-          <li key={l.href}>
-            <Link href={l.href} className="text-sm text-muted transition hover:text-fg">
-              {l.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }

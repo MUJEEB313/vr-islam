@@ -9,24 +9,19 @@ export const asset = (path: string) => (path.startsWith("/") ? `${basePath}${pat
 
 const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://example.com";
 
-/** Site-wide settings. Rename the site or change the contact address here. */
+/** Site-wide settings. Rename the site here. */
 export const site = {
   name: "VR Islam",
-  tagline: "Virtual ziyarat of the holy shrines of the Ahl al-Bayt (a.s.) in 360° and VR",
+  tagline: "Islamic heritage in 360° and VR",
   description:
-    "Watch 360° and VR videos of the holy shrines of Karbala, Najaf, Kadhimiya, Samarra, Mashhad, Qom, Damascus and Madinah, plus the Arbaeen walk and Muharram majalis, in your browser or in a VR headset.",
+    "Watch 360° and VR views of Masjid al-Haram, Masjid an-Nabawi, Al-Aqsa, the great mosques of the world and the journey of Hajj, in your browser or in a VR headset.",
   /** Scheme + host, e.g. "https://name.github.io". Set NEXT_PUBLIC_SITE_ORIGIN at build time. */
   origin,
   /** Full public URL of the site root, including the base path. */
   url: `${origin}${basePath}`,
-  // PLACEHOLDER: set to a real inbox.
-  contactEmail: "hello@example.com",
+  contact: {
+    phone: "(+91) 89763 80690",
+    phoneHref: "tel:+918976380690",
+    email: "info@arbaeenmemories.com",
+  },
 };
-
-export const nav = [
-  { href: "/videos", label: "Library" },
-  { href: "/shrines", label: "Shrines" },
-  { href: "/collections", label: "Collections" },
-  { href: "/calendar", label: "Calendar" },
-  { href: "/how-to-watch", label: "How to watch" },
-];

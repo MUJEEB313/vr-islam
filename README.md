@@ -1,6 +1,6 @@
 # VR Islam
 
-A 360° / VR video library for Shia Islamic content: virtual ziyarat of the holy shrines, the Arbaeen walk, Muharram majalis and historical reconstructions. Videos play in the browser on desktop and phones (drag or gyroscope) and in VR headsets via WebXR (Meta Quest, Vision Pro, Pico).
+360° and VR views of Islamic heritage: Masjid al-Haram, Masjid an-Nabawi, Al-Aqsa, great mosques of the world and the journey of Hajj. Views play in the browser on desktop and phones (drag or gyroscope) and in VR headsets via WebXR (Meta Quest, Vision Pro, Pico).
 
 Built with Next.js 15 (App Router), TypeScript, Tailwind CSS v4 and three.js.
 
@@ -20,22 +20,21 @@ Every push to `main` is built and published to **GitHub Pages** by `.github/work
 > If the build fails with `Failed to fetch … from Google Fonts` / `ETIMEDOUT`, your network has broken IPv6. Run
 > `NODE_OPTIONS=--dns-result-order=ipv4first npm run build`.
 
+## Pages
+
+- **Home**: the logo, a banner, a card for every 360° view, and VR headset guidelines.
+- **Watch** (`/videos/<slug>`): the 360° player, details, share/embed and "Up next".
+- **Embed** (`/embed/<slug>`): a chrome-less player for other websites' `<iframe>`s.
+
 ## Adding real videos
 
-All content lives in typed data files in `src/content/`:
-
-| File | What it holds |
-| --- | --- |
-| `videos.ts` | Every video: title, description, shrine, category, format, source, poster, duration |
-| `shrines.ts` | The shrines: names, who rests there, history, recommended ziyarat, coordinates |
-| `collections.ts` | Curated playlists and the Hijri calendar of occasions |
-
-The current videos are **placeholders**: 360° scenes generated in the browser (`source.type: "generated"`). To publish real footage, edit the video entry:
+All views are listed in `src/content/videos.ts`. The current ones are **placeholders**: 360° scenes generated in the browser (`source.type: "generated"`). To publish real footage, edit an entry:
 
 ```ts
-source: { type: "file", src: "https://cdn.example.com/karbala-night-8k.mp4" },
+source: { type: "file", src: "https://cdn.example.com/masjid-an-nabawi-8k.mp4" },
 format: "360-mono",          // or "360-stereo-tb" (3D top/bottom) or "180-stereo-sbs" (VR180)
-poster: "/media/karbala-night.jpg",   // 16:9 still
+poster: "/media/masjid-an-nabawi.jpg",   // 16:9 still; run `npm run thumbs` for its card thumbnail
+location: "Madinah, Saudi Arabia",
 duration: 412,
 ```
 
@@ -43,31 +42,21 @@ duration: 412,
 - A YouTube 360° video can be listed without re-hosting: `source: { type: "youtube", id: "VIDEO_ID" }`.
 - Replace `views` with real numbers from your analytics and remove the `credits` placeholder line.
 
-Before launch, set `contactEmail` in `src/lib/site.ts`.
+## Player
 
-## Features
-
-- **360° player** (`src/components/player/Vr360Player.tsx`): drag/pinch/wheel, keyboard shortcuts, gyroscope on phones, "Enter VR" (WebXR, with the controller trigger to play/pause), stereo 3D and VR180, resume where you left off, and pausing when off-screen.
-- **Library** with search, filters (shrine, category, length) and sorting, all synced to the URL.
-- **Shrine pages** with history, recommended ziyarat and a map link. **Collections** as ordered playlists.
-- **Hijri calendar**: today's date and upcoming births, martyrdoms and Eids, each linked to related videos (`?hijri-test=YYYY-MM-DD` on the home page simulates a date).
-- **Saved**: favourites, watch later and continue watching, stored on the device with no account.
-- **Embeds**: `/embed/<slug>` is a chrome-less player that mosques and centres can drop into an `<iframe>` (the Embed button generates the code).
-- ⌘K search, dark/light themes, SEO metadata, `VideoObject` JSON-LD, sitemap and an Open Graph image.
-- **Mobile-first**: bottom tab bar, 44px touch targets, safe-area support for notched phones, full-screen search, an iPhone full-screen fallback with landscape lock, gyroscope look-around, and installation to the home screen (web app manifest).
-- **Light on data**: card thumbnails (~30 KB), only the font weights in use, no prefetching from cards, and the home page's live 3D scene loads only once the page is idle (never on data-saver or 2G).
+`src/components/player/Vr360Player.tsx`: drag/pinch/wheel, keyboard shortcuts, gyroscope on phones, "Enter VR" (WebXR, with the controller trigger to play/pause), stereo 3D and VR180, resume where you left off, an iPhone full-screen fallback, and pausing when off-screen.
 
 ## Brand
 
-The logo source is in `logo/`. `node scripts/make-brand.mjs` regenerates the transparent logo variants in `public/brand/` and the app icons; `node scripts/make-share-image.mjs` regenerates the link-preview image. Colours and fluid type live in `src/app/globals.css`.
+The logo source is in `logo/`. `node scripts/make-brand.mjs` regenerates the transparent logo and headset mark in `public/brand/` and the app icons; `node scripts/make-share-image.mjs` regenerates the link-preview image. Colours and fluid type live in `src/app/globals.css` (light theme).
 
 ## Screens
 
-Layouts are fluid rather than tied to a few breakpoints: grids choose their own column count, type scales with the screen, and components respond to their own width (container queries). Sizing of tap targets follows the pointer type, not the width, so touch tablets get touch-sized controls. Phones on their side get a compact layout (`short:` variant), and foldables/dual screens use the Viewport Segments API (`fold-h:` / `fold-v:` variants and the `@media` block in `globals.css`) so nothing sits on the hinge.
+Layouts are fluid rather than tied to a few breakpoints: grids choose their own column count and type scales with the screen. Tap targets follow the pointer type, so touch tablets get touch-sized controls. Phones on their side get a compact layout (`short:` variant), and foldables/dual screens use the Viewport Segments API (`fold-h:` / `fold-v:` and the `@media` block in `globals.css`) so nothing sits on the hinge.
 
 ## Placeholder scenes & posters
 
-Generated scenes are described by a `SceneSpec` (`src/lib/scene/types.ts`) and drawn by `src/lib/scene/`. Their poster thumbnails are pre-rendered JPGs in `public/media/placeholder/posters/`. If you change a scene, regenerate its poster:
+Generated scenes are described by a `SceneSpec` (`src/lib/scene/types.ts`) and drawn by `src/lib/scene/`. Their posters are pre-rendered JPGs in `public/media/placeholder/posters/`. If you change a scene, regenerate its poster:
 
 ```bash
 npm run dev

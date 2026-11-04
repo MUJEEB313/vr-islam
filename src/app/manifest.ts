@@ -6,7 +6,7 @@ export const dynamic = "force-static";
 /** Makes the site installable ("Add to Home Screen") with an app-like, full-screen launch. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${site.name}: Virtual Ziyarat in 360° & VR`,
+    name: `${site.name}: Islamic heritage in 360° & VR`,
     short_name: site.name,
     description: site.description,
     id: `${basePath}/`,
@@ -14,18 +14,13 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: `${basePath}/`,
     display: "standalone",
     orientation: "any",
-    background_color: "#020c1f",
-    theme_color: "#020c1f",
+    background_color: "#ffffff",
+    theme_color: "#ffffff",
     categories: ["education", "lifestyle", "entertainment"],
     icons: [
       { src: asset("/icons/icon-192.png"), sizes: "192x192", type: "image/png" },
       { src: asset("/icons/icon-512.png"), sizes: "512x512", type: "image/png" },
       { src: asset("/icons/maskable-512.png"), sizes: "512x512", type: "image/png", purpose: "maskable" },
-    ],
-    shortcuts: [
-      { name: "Library", url: `${basePath}/videos/` },
-      { name: "Shrines", url: `${basePath}/shrines/` },
-      { name: "Saved", url: `${basePath}/saved/` },
     ],
   };
 }

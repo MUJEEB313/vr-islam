@@ -1,6 +1,6 @@
 import type { SceneSpec } from "./scene/types";
 
-export type Category = "ziyarat" | "arbaeen" | "majlis" | "history" | "documentary";
+export type Category = "mosque" | "hajj" | "interior" | "site";
 
 export type VideoFormat = "360-mono" | "360-stereo-tb" | "180-stereo-sbs";
 
@@ -19,7 +19,8 @@ export interface Video {
   summary: string;
   description: string;
   category: Category;
-  shrine?: string;
+  /** Place name shown on cards, e.g. "Makkah, Saudi Arabia". */
+  location: string;
   format: VideoFormat;
   source: VideoSource;
   /** Poster image path (16:9), used for large views and the player. */
@@ -32,38 +33,4 @@ export interface Video {
   views: number;
   tags: string[];
   credits?: string;
-  featured?: boolean;
-}
-
-export interface Shrine {
-  slug: string;
-  name: string;
-  arabic: string;
-  /** Who is buried there, with honorifics. */
-  resting: string;
-  city: string;
-  country: string;
-  coords: [number, number];
-  summary: string;
-  about: string[];
-  ziyarat: string[];
-}
-
-export interface Collection {
-  slug: string;
-  title: string;
-  arabic?: string;
-  summary: string;
-  videos: string[];
-  accent: "azure" | "emerald" | "crimson" | "night";
-}
-
-export interface Occasion {
-  /** Hijri month 1–12. */
-  month: number;
-  day: number;
-  title: string;
-  kind: "wiladat" | "shahadat" | "eid" | "commemoration";
-  /** Where the banner should take people. */
-  href: string;
 }

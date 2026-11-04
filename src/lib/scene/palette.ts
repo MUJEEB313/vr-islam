@@ -92,6 +92,16 @@ const DOME_STOPS: Record<DomeColor, [number, string][]> = {
     [0.35, "#2f9d66"],
     [1, "#11533a"],
   ],
+  white: [
+    [0, "#ffffff"],
+    [0.45, "#e9ecef"],
+    [1, "#a7aeb6"],
+  ],
+  lead: [
+    [0, "#dfe4ea"],
+    [0.4, "#9aa3ad"],
+    [1, "#4e5661"],
+  ],
 };
 
 /** Domes are floodlit at night, so they stay bright regardless of sky. */

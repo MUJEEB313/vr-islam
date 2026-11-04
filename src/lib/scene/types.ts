@@ -9,20 +9,22 @@ export type Sky = "night" | "dusk" | "dawn" | "day";
 
 export type Particles = "lights" | "pigeons" | "motes" | "dust";
 
-export type DomeColor = "gold" | "turquoise" | "green";
-export type FacadeStyle = "tile" | "stone";
+/** "lead" is the grey of Ottoman and Jerusalem domes; "white" is marble. */
+export type DomeColor = "gold" | "turquoise" | "green" | "white" | "lead";
+export type FacadeStyle = "tile" | "stone" | "marble" | "sandstone";
+export type MinaretColor = "gold" | "tile" | "stone" | "white" | "sandstone";
 
 export interface ShrineOpts {
-  /** Longitude (degrees) of the shrine centre. 180 = straight ahead. */
+  /** Longitude (degrees) of the building centre. 180 = straight ahead. */
   lon: number;
   /** Angular scale; 1 ≈ standing ~80 m away. */
   scale?: number;
   dome: DomeColor;
-  /** Two side-by-side domes (e.g. Kadhimiya). */
+  /** Two side-by-side domes. */
   twin?: boolean;
   /** Pairs of minarets: 0, 1 or 2. */
   minaretPairs: 0 | 1 | 2;
-  minaretColor: "gold" | "tile" | "stone";
+  minaretColor: MinaretColor;
   facade: FacadeStyle;
   /** Golden iwan (portal) framing the entrance. */
   goldenIwan?: boolean;
@@ -33,11 +35,15 @@ export interface CourtyardSpec {
   sky: Sky;
   seed: number;
   shrines: ShrineOpts[];
-  /** Additional turquoise mosque domes (e.g. Goharshad in Mashhad). */
-  sideDomes?: { lon: number; scale?: number }[];
+  /** Secondary domed halls beside the main building. */
+  sideDomes?: { lon: number; scale?: number; color?: DomeColor; facade?: FacadeStyle; minarets?: boolean }[];
   arcade: FacadeStyle;
-  /** Clock tower above a gate in the arcade (Najaf). */
-  clockTowerLon?: number;
+  /** Small domes along the top of the arcade (Ottoman style). */
+  arcadeDomes?: boolean;
+  /** Free-standing minarets rising behind the arcade, by longitude. */
+  towers?: number[];
+  /** The Kaaba at the centre of the courtyard, ringed by pilgrims. */
+  kaaba?: boolean;
   inlay: string;
   particles: Particles[];
 }
@@ -46,7 +52,7 @@ export interface RoadSpec {
   kind: "road";
   sky: Sky;
   seed: number;
-  /** Number of walking pilgrims drawn along the road. */
+  /** Number of pilgrims (in ihram) walking along the road between the tents. */
   crowd: number;
   particles: Particles[];
 }
@@ -63,11 +69,17 @@ export interface PlainSpec {
   kind: "plain";
   sky: Sky;
   seed: number;
-  river?: boolean;
-  tents?: number;
+  /** Rocky hills around the horizon. */
+  mountains?: boolean;
+  /** A hill straight ahead topped with a white pillar (Jabal al-Rahmah). */
+  pillarHill?: boolean;
+  /** Pilgrims in ihram standing on the plain. */
+  crowd?: number;
+  /** A low wall all around, with a gate ahead (a walled cemetery). */
   wall?: boolean;
+  /** Simple grave markers scattered over the ground, with a few visitors. */
   graves?: number;
-  /** Distant green dome of al-Masjid an-Nabawi. */
+  /** Longitude of a distant green-domed mosque on the skyline (Masjid an-Nabawi). */
   distantMosqueLon?: number;
   particles: Particles[];
 }

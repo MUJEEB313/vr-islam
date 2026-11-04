@@ -1,8 +1,9 @@
 /**
- * Builds every brand asset from the logo in ./logo (a JPEG on white):
- *   public/brand/  transparent logo + mark, for light and dark backgrounds
+ * Builds every brand asset from the logo in ./logo (drawn on a white background):
+ *   public/brand/  transparent logo, plus the headset mark alone for small spaces
  *   public/icons/, src/app/  favicon, home-screen and app icons
  *   node scripts/make-brand.mjs
+ * The mark is split from the "ISLAM" wordmark at the widest blank band of rows.
  */
 import { readdirSync } from "node:fs";
 import sharp from "sharp";
@@ -35,40 +36,70 @@ function cutOut(paint) {
 }
 
 const asIs = (r, g, b) => [r, g, b];
-/** For dark backgrounds: the navy lettering turns white, the blue of the headset is kept and lifted. */
+/** For dark backgrounds (over video): navy turns white, the blue of the headset is kept and lifted. */
 const onDark = (r, g, b) => {
   const blueness = smooth(128, 150, b);
   const lift = (c, to) => c + (to - c) * 0.45;
   return [240 + (lift(r, 30) - 240) * blueness, 246 + (lift(g, 165) - 246) * blueness, 255 + (lift(b, 255) - 255) * blueness];
 };
 
+// Find the drawing's bounds and the blank band separating the mark from the wordmark.
+const ink = (x, y) => Math.min(data[(y * W + x) * 3], data[(y * W + x) * 3 + 1], data[(y * W + x) * 3 + 2]) < 200;
+const rows = Array.from({ length: H }, (_, y) => Array.from({ length: W }, (_, x) => ink(x, y)).some(Boolean));
+const cols = Array.from({ length: W }, (_, x) => rows.some((r, y) => r && ink(x, y)));
+const top = rows.indexOf(true);
+const bottom = rows.lastIndexOf(true);
+const left = cols.indexOf(true);
+const right = cols.lastIndexOf(true);
+let gap = { start: bottom, size: 0 };
+for (let y = top, start = -1; y <= bottom; y++) {
+  if (!rows[y] && start < 0) start = y;
+  if (rows[y] && start >= 0) {
+    if (y - start > gap.size) gap = { start, size: y - start };
+    start = -1;
+  }
+}
+const pad = 6;
+const box = (y0, y1) => {
+  const ys = [y0, y1];
+  const xs = [W, 0];
+  for (let y = y0; y <= y1; y++) {
+    for (let x = left; x <= right; x++) {
+      if (!ink(x, y)) continue;
+      xs[0] = Math.min(xs[0], x);
+      xs[1] = Math.max(xs[1], x);
+    }
+  }
+  const l = Math.max(0, xs[0] - pad);
+  const t = Math.max(0, ys[0] - pad);
+  return { left: l, top: t, width: Math.min(W, xs[1] + pad) - l, height: Math.min(H, ys[1] + pad) - t };
+};
+const LOGO = box(top, bottom);
+const MARK = box(top, gap.start - 1);
+
 const raster = (buf) => sharp(buf, { raw: { width: W, height: H, channels: 4 } }).png().toBuffer();
 const lightPng = await raster(cutOut(asIs));
 const darkPng = await raster(cutOut(onDark));
 
-const MARK = { left: 104, top: 74, width: 580, height: 356 };
-const LOCKUP = { left: 104, top: 74, width: 1392, height: 356 };
-
 async function save(buf, region, out) {
   await sharp(buf).extract(region).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(out);
-  console.log("✓", out);
+  console.log("✓", out, `${region.width}x${region.height}`);
 }
-await save(lightPng, LOCKUP, "public/brand/logo-on-light.png");
-await save(darkPng, LOCKUP, "public/brand/logo-on-dark.png");
-await save(lightPng, MARK, "public/brand/mark-on-light.png");
+await save(lightPng, LOGO, "public/brand/logo.png");
+await save(lightPng, MARK, "public/brand/mark.png");
 await save(darkPng, MARK, "public/brand/mark-on-dark.png");
 
-/** The mark centred on a white square, as the logo was designed to be seen. `fit` is its share of the width. */
-async function icon(out, size, fit) {
-  const mark = await sharp(lightPng).extract(MARK).resize({ width: Math.round(size * fit) }).png().toBuffer();
+/** A logo region centred on a white square. `fit` is its share of the square's width. */
+async function icon(out, size, fit, region) {
+  const img = await sharp(lightPng).extract(region).resize({ width: Math.round(size * fit), height: Math.round(size * fit), fit: "inside" }).png().toBuffer();
   await sharp({ create: { width: size, height: size, channels: 4, background: "#ffffff" } })
-    .composite([{ input: mark, gravity: "center" }])
+    .composite([{ input: img, gravity: "center" }])
     .png()
     .toFile(out);
   console.log("✓", out);
 }
-await icon("public/icons/icon-192.png", 192, 0.86);
-await icon("public/icons/icon-512.png", 512, 0.86);
-await icon("public/icons/maskable-512.png", 512, 0.68); // Android may crop to a circle
-await icon("src/app/apple-icon.png", 180, 0.8);
-await icon("src/app/icon.png", 64, 0.94);
+await icon("public/icons/icon-192.png", 192, 0.82, LOGO);
+await icon("public/icons/icon-512.png", 512, 0.82, LOGO);
+await icon("public/icons/maskable-512.png", 512, 0.62, LOGO); // Android may crop to a circle
+await icon("src/app/apple-icon.png", 180, 0.78, LOGO);
+await icon("src/app/icon.png", 64, 0.94, MARK);

@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 /* Phones on their side: little height, so chrome and copy compress. */
 @custom-variant short (@media (orientation: landscape) and (max-height: 500px));
 /* Foldables and dual screens, side by side (book) or stacked (laptop / flex mode). */
@@ -11,27 +10,25 @@
   --breakpoint-xs: 20rem;
 }
 
-/* Colours are sampled from the VR Islam logo. Dark ("night navy") is the default theme. */
+/* Light theme; colours are sampled from the VR Islam logo. */
 :root {
-  --bg: #020c1f;
-  --surface: #071633;
-  --surface-2: #0c2046;
-  --surface-3: #122b5a;
-  --border: rgb(148 190 255 / 0.13);
-  --border-strong: rgb(148 190 255 / 0.26);
-  --text: #eaf2ff;
-  --muted: #93a8c6;
+  --bg: #f6f9fd;
+  --surface: #ffffff;
+  --surface-2: #eaf1fb;
+  --surface-3: #dbe7f8;
+  --border: rgb(4 58 122 / 0.12);
+  --border-strong: rgb(4 58 122 / 0.24);
+  --text: #0a1f44;
+  --muted: #4f6385;
   /* Button fills; white text on these stays above 4.4:1. */
   --brand: #0172ce;
-  --brand-strong: #0878d8;
+  --brand-strong: #0164b6;
   /* Accent text and icons on the page background. */
-  --brand-ink: #4fb3ff;
-  /* Accent on top of imagery and video, in both themes. */
+  --brand-ink: #0b5ab0;
+  /* Accent on top of imagery and video. */
   --brand-bright: #5cbbff;
-  --emerald: #2fae74;
-  --crimson: #d9424e;
-  --glow: rgb(0 142 241 / 0.16);
-  color-scheme: dark;
+  --navy: #00193f;
+  color-scheme: light;
 
   /* Page side padding; respects notches when a phone is on its side. */
   --gutter: max(1rem, env(safe-area-inset-left), env(safe-area-inset-right));
@@ -41,24 +38,6 @@
   :root {
     --gutter: max(1.5rem, env(safe-area-inset-left), env(safe-area-inset-right));
   }
-}
-
-[data-theme="light"] {
-  --bg: #f5f9ff;
-  --surface: #ffffff;
-  --surface-2: #e9f1fc;
-  --surface-3: #dbe7f8;
-  --border: rgb(4 58 122 / 0.12);
-  --border-strong: rgb(4 58 122 / 0.24);
-  --text: #0a1f44;
-  --muted: #4f6385;
-  --brand: #0172ce;
-  --brand-strong: #0164b6;
-  --brand-ink: #0b5ab0;
-  --emerald: #187a4f;
-  --crimson: #a5232f;
-  --glow: rgb(0 142 241 / 0.1);
-  color-scheme: light;
 }
 
 @theme inline {
@@ -74,8 +53,7 @@
   --color-brand-strong: var(--brand-strong);
   --color-brand-ink: var(--brand-ink);
   --color-brand-bright: var(--brand-bright);
-  --color-emerald: var(--emerald);
-  --color-crimson: var(--crimson);
+  --color-navy: var(--navy);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, sans-serif;
   --font-arabic: var(--font-amiri), "Noto Naskh Arabic", serif;
@@ -95,7 +73,7 @@ html {
 }
 
 body {
-  background: radial-gradient(70rem 32rem at 50% -8rem, var(--glow), transparent) no-repeat, var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
   overflow-wrap: break-word;
@@ -113,7 +91,7 @@ body {
 
 /* Eight-pointed star (khatam) lattice used as a quiet background texture. */
 .bg-girih {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23008ef1' stroke-width='1'%3E%3Cpath d='M32 10 38.5 25.5 54 32 38.5 38.5 32 54 25.5 38.5 10 32 25.5 25.5Z'/%3E%3Crect x='19' y='19' width='26' height='26' transform='rotate(45 32 32)'/%3E%3Crect x='19' y='19' width='26' height='26'/%3E%3Cpath d='M0 0 10 10M64 0 54 10M0 64 10 54M64 64 54 54'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%230172ce' stroke-width='1'%3E%3Cpath d='M32 10 38.5 25.5 54 32 38.5 38.5 32 54 25.5 38.5 10 32 25.5 25.5Z'/%3E%3Crect x='19' y='19' width='26' height='26' transform='rotate(45 32 32)'/%3E%3Crect x='19' y='19' width='26' height='26'/%3E%3Cpath d='M0 0 10 10M64 0 54 10M0 64 10 54M64 64 54 54'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 64px 64px;
 }
 
@@ -125,19 +103,19 @@ body {
     text-align: left;
   }
 
-  /* Fluid type: scales with width, and with height for the hero, between hard limits. */
-  .t-hero {
+  /* Fluid type: scales with the screen between hard limits. */
+  .t-banner {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.7rem, min(1.05rem + 3.4vw, 8.5svh), 4.1rem);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
+    font-size: clamp(1.35rem, 1rem + 1.9vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
   .t-page {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.6rem, 1.3rem + 1.6vw, 2.75rem);
+    font-size: clamp(1.5rem, 1.25rem + 1.4vw, 2.5rem);
     line-height: 1.15;
     letter-spacing: -0.015em;
     text-wrap: balance;
@@ -153,9 +131,8 @@ body {
   .t-card {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.08rem, 1rem + 0.35vw, 1.3rem);
+    font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
     line-height: 1.25;
-    letter-spacing: -0.005em;
   }
 
   /* Page container. */
@@ -171,13 +148,6 @@ body {
     margin-inline: auto;
     padding-inline: 0.5rem;
   }
-  /* Single-column reading pages. */
-  .narrow {
-    width: 100%;
-    max-width: 52rem;
-    margin-inline: auto;
-    padding-inline: var(--gutter);
-  }
   @media (min-width: 120rem) {
     .wrap {
       max-width: 96rem;
@@ -189,11 +159,6 @@ body {
       max-width: 88vw;
     }
   }
-  /* Full-bleed out of .wrap, keeping content aligned to the gutter. */
-  .bleed {
-    margin-inline: calc(var(--gutter) * -1);
-    padding-inline: var(--gutter);
-  }
 
   /* Grids that pick their own column count, so every width gets a sensible layout. */
   .grid-cards {
@@ -201,15 +166,10 @@ body {
     gap: 2rem 1.25rem;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
   }
-  .grid-tiles {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, clamp(8.75rem, 30vw, 13rem)), 1fr));
-  }
   .grid-split {
     display: grid;
     gap: 1.25rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   }
   .grid-list {
     display: grid;
@@ -217,65 +177,12 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
   }
 
-  /* Horizontal rails: swipe on touch, arrows with a mouse. */
-  .rail {
-    display: flex;
-    gap: 1.25rem;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x proximity;
-    scroll-padding-inline: var(--gutter);
-    margin-inline: calc(var(--gutter) * -1);
-    padding-inline: var(--gutter);
-    padding-bottom: 0.5rem;
-    scrollbar-width: none;
-  }
-  .rail::-webkit-scrollbar {
-    display: none;
-  }
-  .rail > * {
-    flex: none;
-    width: clamp(14.5rem, 72vw, 21rem);
-    scroll-snap-align: start;
-  }
-  .rail-tiles {
-    gap: 1rem;
-  }
-  .rail-tiles > * {
-    width: clamp(9.5rem, 46vw, 14rem);
-  }
-
-  /* Hero: fills the screen between the header and the tab bar, within limits. */
-  .hero-frame {
-    height: clamp(25rem, calc(100svh - 9.5rem), 54rem);
-  }
-  @media (min-width: 64rem) {
-    .hero-frame {
-      height: clamp(30rem, calc(100svh - 6.5rem), 60rem);
-    }
-  }
-  @media (orientation: landscape) and (max-height: 500px) {
-    .hero-frame {
-      height: max(15rem, calc(100svh - 3.5rem));
-    }
-  }
-  /* Not enough height for the intro paragraph as well as the buttons. */
-  @media (max-width: 40rem) and (max-height: 700px), (orientation: landscape) and (max-height: 500px) {
-    .hero-sub {
-      display: none;
-    }
-  }
-
   /* Watch page player: tall on portrait screens, widescreen otherwise, always fully on screen. */
   .watch-frame {
     width: 100%;
     aspect-ratio: 16 / 9;
-    max-height: calc(100dvh - 8.5rem);
-  }
-  @media (min-width: 64rem) {
-    .watch-frame {
-      max-height: calc(100dvh - 5.5rem);
-    }
+    /* Leaves room for the logo header above. */
+    max-height: calc(100dvh - 9.5rem);
   }
   @media (orientation: portrait) {
     .watch-frame {
@@ -290,7 +197,8 @@ body {
   }
   @media (orientation: landscape) and (max-height: 500px) {
     .watch-frame {
-      max-height: calc(100dvh - 3rem);
+      /* Only the compact logo header above. */
+      max-height: calc(100dvh - 4rem);
     }
   }
 }
@@ -311,36 +219,9 @@ body {
     max-width: none;
   }
   .grid-cards,
-  .grid-tiles,
-  .grid-split,
-  .fold-cols {
-    display: grid;
+  .grid-split {
     grid-template-columns: calc(var(--seg-l) - var(--gutter) * 2) calc(var(--seg-r) - var(--gutter) * 2);
     column-gap: calc(var(--hinge) + var(--gutter) * 2);
-  }
-  /* Reading pages flow across the two screens, like the pages of a book. */
-  .narrow {
-    max-width: none;
-    columns: 2;
-    column-gap: calc(var(--hinge) + var(--gutter) * 2);
-  }
-  .narrow > *,
-  .narrow section {
-    break-inside: avoid;
-  }
-  /* Already inside one screen's column, so these stack rather than span the hinge. */
-  .narrow .grid-split,
-  .narrow .grid-cards,
-  .narrow .grid-tiles {
-    grid-template-columns: minmax(0, 1fr);
-    column-gap: 0;
-  }
-  /* The hero's copy lives on one screen, so it is sized for that screen's width. */
-  .hero-copy {
-    max-width: calc(var(--seg-l) - 0.5rem);
-  }
-  .t-hero {
-    font-size: clamp(1.7rem, min(1.05rem + var(--seg-l) * 0.034, 8.5svh), 4.1rem);
   }
   /* Watch: player on one screen, details on the other. */
   .watch {
@@ -351,26 +232,16 @@ body {
   }
   .watch-stage {
     position: sticky;
-    top: 4.0625rem;
+    top: 0;
   }
   .watch-frame {
     aspect-ratio: auto;
-    height: calc(100dvh - 4.0625rem);
+    height: 100dvh;
     max-height: none;
     border-radius: 0;
   }
   .watch-details {
     margin-top: 0;
-  }
-  .search-overlay {
-    justify-content: flex-end;
-    padding: 0;
-  }
-  .search-sheet {
-    width: var(--seg-r);
-    max-width: none;
-    height: 100dvh;
-    border-radius: 0;
   }
 }
 
@@ -379,15 +250,9 @@ body {
     --seg-top: env(viewport-segment-height 0 0);
     --hinge-y: calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0));
   }
-  /* Top screen shows the picture; everything else starts below the fold. */
-  .hero-frame {
-    height: calc(var(--seg-top) - 4.5rem);
-    min-height: 0;
-    margin-bottom: var(--hinge-y);
-  }
   .watch-frame {
     aspect-ratio: auto;
-    height: calc(var(--seg-top) - 4.0625rem);
+    height: var(--seg-top);
     max-height: none;
   }
   .watch-stage {
@@ -437,13 +302,6 @@ body {
     width: 20px;
     height: 20px;
   }
-}
-
-.no-scrollbar {
-  scrollbar-width: none;
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

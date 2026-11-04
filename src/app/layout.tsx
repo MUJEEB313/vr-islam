@@ -13,11 +13,11 @@ const shareImage = asset("/brand/og-image.jpg");
 export const metadata: Metadata = {
   // Origin only: relative URLs below already include the base path.
   metadataBase: new URL(site.origin),
-  title: { default: `${site.name}: Virtual Ziyarat in 360° & VR`, template: `%s · ${site.name}` },
+  title: { default: `${site.name}: Islamic heritage in 360° & VR`, template: `%s · ${site.name}` },
   description: site.description,
   openGraph: { siteName: site.name, type: "website", locale: "en", images: [{ url: shareImage, width: 1200, height: 630 }] },
   twitter: { card: "summary_large_image", images: [shareImage] },
-  appleWebApp: { capable: true, title: site.name, statusBarStyle: "black-translucent" },
+  appleWebApp: { capable: true, title: site.name, statusBarStyle: "default" },
   formatDetection: { telephone: false },
 };
 
@@ -26,21 +26,12 @@ export const viewport: Viewport = {
   initialScale: 1,
   // Draw under the notch / home indicator; layouts add safe-area padding.
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#020c1f" },
-    { media: "(prefers-color-scheme: light)", color: "#f5f9ff" },
-  ],
+  themeColor: "#ffffff",
 };
-
-/** Apply the saved theme before first paint to avoid a flash. */
-const themeScript = `try{var t=localStorage.getItem("zvr:theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="dark" className={`${inter.variable} ${sora.variable} ${amiri.variable}`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
+    <html lang="en" className={`${inter.variable} ${sora.variable} ${amiri.variable}`}>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );
