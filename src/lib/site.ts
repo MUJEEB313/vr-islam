@@ -27,10 +27,10 @@ export const site = {
     youtube,
     youtubeHandle: "@vrIslamofficial",
   },
-  /** Sister projects, linked in the footer. "#" marks a site that isn't online yet. */
+  /** Sister projects in the footer. Without `href` an entry is plain text, shown with a "#" in front. */
   initiatives: [
     { name: "www.arbaeenmemories.com", href: "https://arbaeenmemories.com" },
-    { name: "www.vrislam.com", href: "#" },
-    { name: "www.yakeenmedia", href: "#" },
-  ],
+    { name: "www.vrislam.com" },
+    { name: "www.yakeenmedia" },
+  ] as { name: string; href?: string }[],
 };
