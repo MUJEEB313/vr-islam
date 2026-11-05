@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { WaysToWatch } from "@/components/WaysToWatch";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,7 +9,10 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         Skip to content
       </a>
       <SiteHeader />
-      <main id="main">{children}</main>
+      <main id="main">
+        {children}
+        <WaysToWatch />
+      </main>
       <SiteFooter />
     </>
   );
