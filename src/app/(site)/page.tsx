@@ -32,7 +32,7 @@ export default function HomePage() {
                 Four ways to step inside
               </h2>
               <p className="mt-3 text-muted">
-                For the most immersive experience, watch in the <strong className="font-semibold text-fg">VR Islam app</strong>. Or play any video right here in your browser:
+                For the most immersive experience, watch in the <strong className="font-semibold text-fg">VR ISLAM app</strong>. Or play any video right here in your browser:
                 in a headset, the mosque surrounds you, and the trigger plays and pauses.
               </p>
             </div>
@@ -41,8 +41,8 @@ export default function HomePage() {
                 <span className="grid size-11 place-items-center rounded-xl bg-white ring-1 ring-brand/20">
                   <LogoMark className="h-6" />
                 </span>
-                <h3 className="mt-4 font-semibold text-brand-ink">VR Islam app</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted">Watch every video in full immersion with the VR Islam app.</p>
+                <h3 className="mt-4 font-semibold text-brand-ink">VR ISLAM app</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted">Watch every video in full immersion with the VR ISLAM app.</p>
               </div>
               {DEVICES.map((d) => (
                 <div key={d.title} className="rounded-2xl border border-line bg-bg/60 p-5">

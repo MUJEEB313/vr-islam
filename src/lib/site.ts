@@ -12,7 +12,7 @@ const youtube = "https://www.youtube.com/@vrIslamofficial";
 
 /** Site-wide settings. Rename the site here. */
 export const site = {
-  name: "VR Islam",
+  name: "VR ISLAM",
   tagline: "Experience Islam beyond imagination",
   // From the YouTube channel's description.
   description: "Experience Islam Beyond Imagination. Relive History Through Virtual Reality. Don't Just Learn History. Experience It.",
@@ -26,11 +26,15 @@ export const site = {
     email: "info@arbaeenmemories.com",
     youtube,
     youtubeHandle: "@vrIslamofficial",
+    instagram: [
+      { label: "Arbaeen Memories", href: "https://www.instagram.com/arbaeenmemories?cplk=N2NhdjJscnRwOGJo" },
+      { label: "VR ISLAM", href: "https://www.instagram.com/vrislamofficial?obrf=MWh3MGtrYW1seHducg==" },
+    ],
   },
   /** Sister projects in the footer. Without `href` an entry is plain text, shown with a "#" in front. */
   initiatives: [
     { name: "www.arbaeenmemories.com", href: "https://arbaeenmemories.com" },
-    { name: "www.vrislam.com" },
+    { name: "www.vrislam.com", href: "https://www.vrislam.com" },
     { name: "www.yakeenmedia" },
   ] as { name: string; href?: string }[],
 };

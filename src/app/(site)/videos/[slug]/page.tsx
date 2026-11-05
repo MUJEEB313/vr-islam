@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icons";
 import { VideoPlayer } from "@/components/player/VideoPlayer";
-import { ShareEmbed } from "@/components/ShareEmbed";
 import { getVideo, relatedVideos, thumbOf, videos } from "@/content";
 import { formatDate, formatDuration, formatViews } from "@/lib/format";
 import { asset, site } from "@/lib/site";
@@ -76,23 +75,10 @@ export default async function WatchPage({ params }: Props) {
       <div className="watch-details @container wrap mt-5">
       <div className="grid gap-10 @4xl:grid-cols-[minmax(0,1fr)_360px]">
         <article>
-          <div className="flex flex-wrap gap-2">
-            <ShareEmbed slug={video.slug} title={video.title} />
-          </div>
-
-          <div className="mt-8 max-w-3xl space-y-4 leading-relaxed text-fg/90">
+          <div className="max-w-3xl space-y-4 leading-relaxed text-fg/90">
             <p className="text-lg">{video.summary}</p>
             <p className="text-muted">{video.description}</p>
           </div>
-
-          <div className="mt-8 flex flex-wrap gap-2">
-            {video.tags.map((t) => (
-              <span key={t} className="rounded-full border border-line px-3 py-1 text-xs text-muted">
-                #{t}
-              </span>
-            ))}
-          </div>
-          {video.credits && <p className="mt-6 text-xs text-muted">{video.credits}</p>}
         </article>
 
         <aside aria-label="Up next">

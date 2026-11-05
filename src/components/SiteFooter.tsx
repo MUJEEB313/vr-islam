@@ -6,12 +6,14 @@ import { Logo } from "./Logo";
 
 /** Four columns: logo and description | latest videos | our initiatives | contact. */
 export function SiteFooter() {
-  const { phone, phoneHref, email, youtube, youtubeHandle } = site.contact;
+  const { phone, phoneHref, email, youtube, youtubeHandle, instagram } = site.contact;
   return (
     <footer className="mt-[var(--section-gap)] border-t border-line bg-surface pb-[env(safe-area-inset-bottom)]">
       <div className="wrap fold-cols grid gap-x-10 gap-y-10 py-12 sm:grid-cols-[auto_auto] sm:justify-between lg:flex lg:justify-between">
         <div>
-          <Logo className="h-16" />
+          <Link href="/" aria-label={`${site.name} home`} className="inline-block rounded-lg">
+            <Logo className="h-16" />
+          </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
             <span className="block">Experience Islam beyond imagination.</span>
             <span className="block">Relive history through virtual reality.</span>
@@ -62,11 +64,21 @@ export function SiteFooter() {
             <a href={youtube} target="_blank" rel="noopener noreferrer" className="-my-1 inline-flex h-10 items-center gap-2 text-fg/85 transition hover:text-brand-ink">
               <Icon name="youtube" size={18} className="text-brand" /> {youtubeHandle}
             </a>
+            {instagram.map((ig) => (
+              <a key={ig.href} href={ig.href} target="_blank" rel="noopener noreferrer" className="-my-1 inline-flex h-10 items-center gap-2 text-fg/85 transition hover:text-brand-ink">
+                <Icon name="instagram" size={18} className="text-brand" /> {ig.label}
+              </a>
+            ))}
           </address>
         </FooterCol>
       </div>
       <p className="border-t border-line py-4 text-center text-xs text-muted">
-        <span className="fold-left block">© {new Date().getFullYear()} {site.name}</span>
+        <span className="fold-left block">
+          © {new Date().getFullYear()}{" "}
+          <Link href="/" className="transition hover:text-brand-ink hover:underline">
+            {site.name}
+          </Link>
+        </span>
       </p>
     </footer>
   );

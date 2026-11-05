@@ -1,4 +1,4 @@
-# VR Islam
+# VR ISLAM
 
 **Experience Islam beyond imagination**: relive history through virtual reality. 360° and VR views of Masjid al-Haram, Masjid an-Nabawi, Jannat al-Baqi', Al-Aqsa, great mosques of the world and the journey of Hajj. Views play in the browser on desktop and phones (drag or gyroscope) and in VR headsets via WebXR (Meta Quest, Vision Pro, Pico).
 
