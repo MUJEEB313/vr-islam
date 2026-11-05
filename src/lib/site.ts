@@ -31,10 +31,13 @@ export const site = {
       { label: "VR ISLAM", href: "https://www.instagram.com/vrislamofficial?obrf=MWh3MGtrYW1seHducg==" },
     ],
   },
-  /** Sister projects in the footer. Without `href` an entry is plain text, shown with a "#" in front. */
+  /**
+   * Sister projects in the footer. Without `href` an entry is plain text, shown with a "#" in front.
+   * An href starting with "/" is this site (vrislam.com is this site's own domain).
+   */
   initiatives: [
     { name: "www.arbaeenmemories.com", href: "https://arbaeenmemories.com" },
-    { name: "www.vrislam.com", href: "https://www.vrislam.com" },
+    { name: "www.vrislam.com", href: "/" },
     { name: "www.yakeenmedia" },
   ] as { name: string; href?: string }[],
 };
