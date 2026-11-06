@@ -32,12 +32,13 @@ export const site = {
     ],
   },
   /**
-   * Sister projects in the footer. Without `href` an entry is plain text, shown with a "#" in front.
-   * An href starting with "/" is this site (vrislam.com is this site's own domain).
+   * Sister projects in the footer. An href starting with "/" or "#" stays on this site
+   * (vrislam.com is this site's own domain); full URLs open in a new tab.
    */
   initiatives: [
-    { name: "www.arbaeenmemories.com", href: "https://arbaeenmemories.com" },
-    { name: "www.vrislam.com", href: "/" },
-    { name: "www.yakeenmedia" },
+    { name: "Arbaeen Memories", href: "https://arbaeenmemories.com" },
+    { name: "VR ISLAM", href: "/" },
+    // PLACEHOLDER: "#" until Yaqeen Media has a website.
+    { name: "Yaqeen Media", href: "#" },
   ] as { name: string; href?: string }[],
 };

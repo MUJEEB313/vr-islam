@@ -45,6 +45,10 @@ export function SiteFooter() {
                   <Link href={href} className="transition hover:text-brand-ink">
                     {name}
                   </Link>
+                ) : href?.startsWith("#") ? (
+                  <a href={href} className="transition hover:text-brand-ink">
+                    {name}
+                  </a>
                 ) : href ? (
                   <a href={href} target="_blank" rel="noopener noreferrer" className="transition hover:text-brand-ink">
                     {name}
