@@ -73,3 +73,7 @@ This uses the local Chrome at `/usr/bin/google-chrome` (override with `CHROME_PA
 - `public/llms.txt` is served at the site root (`/llms.txt`).
 - Home title/description and the WebSite schema markup are set in `src/app/layout.tsx`; the page's H1 and intro text are in `src/app/(site)/page.tsx`.
 - Builds default to `https://vrislam.net` for absolute URLs (sitemap, link previews); GitHub Pages builds override this via `NEXT_PUBLIC_SITE_ORIGIN`.
+
+## Android app
+
+The APK is published as a GitHub Release asset named `VR-Islam.apk`. The site links to `releases/latest/download/VR-Islam.apk`, so a new version only needs a new release with an asset of the same name; update `site.app.version` and `sizeMb` in `src/lib/site.ts`.

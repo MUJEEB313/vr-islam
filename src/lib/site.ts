@@ -35,6 +35,15 @@ export const site = {
    * Sister projects in the footer. An href starting with "/" or "#" stays on this site
    * (vrislam.com is this site's own domain); full URLs open in a new tab.
    */
+  /**
+   * Android app. The file is a GitHub Release asset; "latest/download" always points at the newest
+   * release, so a new version only needs a new release with an asset named VR-Islam.apk.
+   */
+  app: {
+    apkUrl: "https://github.com/MUJEEB313/vr-islam/releases/latest/download/VR-Islam.apk",
+    version: "1.0",
+    sizeMb: 88,
+  },
   initiatives: [
     { name: "Arbaeen Memories", href: "https://arbaeenmemories.com" },
     { name: "VR ISLAM", href: "/" },

@@ -1,3 +1,4 @@
+import { site } from "@/lib/site";
 import { Icon, type IconName } from "./Icons";
 import { LogoMark } from "./Logo";
 
@@ -30,6 +31,16 @@ export function WaysToWatch() {
               </span>
               <h3 className="mt-4 font-semibold text-brand-ink">VR ISLAM app</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-muted">Watch every video in full immersion with the VR ISLAM app.</p>
+              <a
+                href={site.app.apkUrl}
+                download
+                className="mt-4 inline-flex h-11 items-center gap-2 rounded-full bg-brand px-4 text-sm whitespace-nowrap font-semibold text-white transition hover:bg-brand-strong pointer-fine:h-10"
+              >
+                <Icon name="download" size={18} /> Download APK
+              </a>
+              <p className="mt-2 text-xs text-muted">
+                Android · v{site.app.version} · {site.app.sizeMb} MB
+              </p>
             </div>
             {DEVICES.map((d) => (
               <div key={d.title} className="rounded-2xl border border-line bg-bg/60 p-5">

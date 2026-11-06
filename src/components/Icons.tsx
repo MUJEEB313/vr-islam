@@ -51,6 +51,7 @@ const paths = {
       <circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none" />
     </g>
   ),
+  download: <path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14" />,
   home: <path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1v-8.5Z" />,
   library: <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Zm6.5 3.2v5.6l4.6-2.8-4.6-2.8Z" />,
   dome: <path d="M5 20h14M6.5 20v-5h11v5M7 15c0-4 2.4-6 4-7.2.6-.5 1-1.2 1-2 0 .8.4 1.5 1 2 1.6 1.2 4 3.2 4 7.2M12 3v2.5" />,
