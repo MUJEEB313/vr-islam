@@ -22,9 +22,9 @@ Every push to `main` is built and published to **GitHub Pages** by `.github/work
 
 ## Pages
 
-- **Home**: the logo, a small banner ("Experience Islam beyond imagination" with Explore / Visit / Feel), the 360° videos, the "Four ways to step inside" guide (VR Islam app, headset, phone, computer), and a footer with the latest videos, our initiatives and contact details.
+- **Home**: the logo, a small banner ("Experience Islam beyond imagination" with Explore / Visit / Feel), the 360° videos, the "Three ways to step inside" guide (VR Islam app, headset, Android), and a footer with the latest videos, our initiatives and contact details.
 - **Watch** (`/videos/<slug>`): the title on top, the 360° player at full width, then the description and "Up next".
-- Every page ends with the "Four ways to step inside" guide (`src/components/WaysToWatch.tsx`) and the footer.
+- Every page ends with the "Three ways to step inside" guide (`src/components/WaysToWatch.tsx`) and the footer.
 - **Embed** (`/embed/<slug>`): a chrome-less player for other websites' `<iframe>`s.
 
 ## Adding real videos

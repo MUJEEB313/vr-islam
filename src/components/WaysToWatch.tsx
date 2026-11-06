@@ -3,11 +3,10 @@ import { LogoMark } from "./Logo";
 
 const DEVICES: { icon: IconName; title: string; body: string }[] = [
   { icon: "headset", title: "VR headset", body: "Open the site in Meta Quest or Vision Pro and tap “Enter VR” for full immersion." },
-  { icon: "phone", title: "Phone", body: "Turn on motion control and move your phone to look around the mosque." },
-  { icon: "monitor", title: "Computer", body: "Drag with the mouse or use the arrow keys. Scroll to zoom in on the tilework." },
+  { icon: "phone", title: "Android", body: "Turn on motion control and move your Android phone to look around the mosque." },
 ];
 
-/** "App, headset, phone or computer" guide, shown above the footer on every page. */
+/** "App, headset or Android" guide, shown above the footer on every page. */
 export function WaysToWatch() {
   return (
     <section aria-labelledby="vr-title" className="wrap mt-[var(--section-gap)]">
@@ -15,16 +14,16 @@ export function WaysToWatch() {
         <div className="bg-girih pointer-events-none absolute inset-0 opacity-[0.05]" />
         <div className="fold-cols relative grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
           <div>
-            <p className="mb-2 text-xs font-semibold tracking-[0.2em] text-brand-ink uppercase">App, headset, phone or computer</p>
+            <p className="mb-2 text-xs font-semibold tracking-[0.2em] text-brand-ink uppercase">App, headset or Android</p>
             <h2 id="vr-title" className="t-section">
-              Four ways to step inside
+              Three ways to step inside
             </h2>
             <p className="mt-3 text-muted">
               For the most immersive experience, watch in the <strong className="font-semibold text-fg">VR ISLAM app</strong>. Or play any video right here in
               your browser: in a headset, the mosque surrounds you, and the trigger plays and pauses.
             </p>
           </div>
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,13rem),1fr))] gap-4">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,11rem),1fr))] gap-4">
             <div className="rounded-2xl border-2 border-brand/40 bg-brand/5 p-5">
               <span className="grid size-11 place-items-center rounded-xl bg-white ring-1 ring-brand/20">
                 <LogoMark className="h-6" />

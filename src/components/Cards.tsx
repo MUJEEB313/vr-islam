@@ -5,12 +5,12 @@ import { asset } from "@/lib/site";
 import type { Video } from "@/lib/types";
 import { Icon } from "./Icons";
 
-/** Link to a video: YouTube videos go straight to YouTube, others to their page on this site. */
+/** Link to a video: YouTube videos open YouTube in a new tab, others go to their page on this site. */
 export function VideoLink({ video, className, children }: { video: Video; className?: string; children: React.ReactNode }) {
   const yt = youtubeUrl(video);
   if (yt) {
     return (
-      <a href={yt} className={className}>
+      <a href={yt} target="_blank" rel="noopener noreferrer" className={className}>
         {children}
       </a>
     );
@@ -53,6 +53,14 @@ export function VideoCard({ video }: { video: Video }) {
 }
 
 export function VideoGrid({ videos }: { videos: Video[] }) {
+  if (videos.length === 1) {
+    // A single video sits in the middle instead of in the first grid column.
+    return (
+      <div className="mx-auto w-full max-w-xl">
+        <VideoCard video={videos[0]} />
+      </div>
+    );
+  }
   return (
     <div className="grid-cards">
       {videos.map((v) => (

@@ -8,7 +8,7 @@ export default function HomePage() {
       <Banner />
 
       <section id="views" aria-labelledby="views-title" className="wrap mt-[var(--section-gap)] scroll-mt-4">
-        <h2 id="views-title" className="t-section mb-6">
+        <h2 id="views-title" className={`t-section mb-6${videos.length === 1 ? " text-center" : ""}`}>
           360° Videos
         </h2>
         <VideoGrid videos={videos} />
