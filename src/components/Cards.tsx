@@ -56,7 +56,7 @@ export function VideoGrid({ videos }: { videos: Video[] }) {
   if (videos.length === 1) {
     // A single video sits in the middle instead of in the first grid column.
     return (
-      <div className="mx-auto w-full max-w-xl">
+      <div className="mx-auto w-full max-w-xl text-center">
         <VideoCard video={videos[0]} />
       </div>
     );
