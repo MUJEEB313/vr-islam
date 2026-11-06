@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { latestVideos, thumbOf } from "@/content";
 import { asset, site } from "@/lib/site";
+import { VideoLink } from "./Cards";
 import { Icon } from "./Icons";
 import { Logo } from "./Logo";
 
@@ -26,11 +27,11 @@ export function SiteFooter() {
           <ul className="space-y-3">
             {latestVideos(3).map((v) => (
               <li key={v.slug}>
-                <Link href={`/videos/${v.slug}`} prefetch={false} className="group flex items-center gap-3">
+                <VideoLink video={v} className="group flex items-center gap-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={asset(thumbOf(v))} alt="" loading="lazy" className="aspect-video w-20 shrink-0 rounded-lg object-cover ring-1 ring-line" />
                   <span className="line-clamp-2 text-sm leading-snug text-fg/85 transition group-hover:text-brand-ink">{v.title}</span>
-                </Link>
+                </VideoLink>
               </li>
             ))}
           </ul>
@@ -69,11 +70,22 @@ export function SiteFooter() {
             <a href={`mailto:${email}`} className="-my-1 inline-flex h-10 items-center gap-2 break-all text-fg/85 transition hover:text-brand-ink">
               <Icon name="mail" size={18} className="shrink-0 text-brand" /> {email}
             </a>
-            <a href={youtube} target="_blank" rel="noopener noreferrer" className="-my-1 inline-flex h-10 items-center gap-2 text-fg/85 transition hover:text-brand-ink">
+            <a
+              href={youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="-my-1 inline-flex h-10 items-center gap-2 text-fg/85 transition hover:text-brand-ink"
+            >
               <Icon name="youtube" size={18} className="text-brand" /> {youtubeHandle}
             </a>
             {instagram.map((ig) => (
-              <a key={ig.href} href={ig.href} target="_blank" rel="noopener noreferrer" className="-my-1 inline-flex h-10 items-center gap-2 text-fg/85 transition hover:text-brand-ink">
+              <a
+                key={ig.href}
+                href={ig.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="-my-1 inline-flex h-10 items-center gap-2 text-fg/85 transition hover:text-brand-ink"
+              >
                 <Icon name="instagram" size={18} className="text-brand" /> {ig.label}
               </a>
             ))}

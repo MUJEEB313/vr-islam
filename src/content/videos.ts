@@ -11,7 +11,7 @@ export const videos: Video[] = [
   {
     slug: "jannat-al-baqi",
     // Title and description are taken from the YouTube video.
-    title: "Jannat-ul-Baqi VR | Experience the Untold History of Baqi | A Journey Through Time",
+    title: "Teaser - Jannat-ul-Baqi VR | Experience the Untold History of Baqi | A Journey Through Time",
     summary: "What if you could stand in Jannat-ul-Baqi and witness the history that time could never erase?",
     description: [
       "Experience the sacred cemetery of Jannat-ul-Baqi in Madinah through an immersive Virtual Reality journey.",

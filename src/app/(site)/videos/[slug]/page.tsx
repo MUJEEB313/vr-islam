@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icons";
 import { VideoPlayer } from "@/components/player/VideoPlayer";
-import { getVideo, relatedVideos, thumbOf, videos } from "@/content";
+import { getVideo, relatedVideos, thumbOf, videos, youtubeUrl } from "@/content";
 import { formatDate, formatDuration, formatViews } from "@/lib/format";
 import { asset, site } from "@/lib/site";
 
@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const video = getVideo((await params).slug);
   if (!video) return {};
   return {
+    ...(youtubeUrl(video) ? { robots: { index: false } } : {}),
     title: video.title,
     description: video.summary,
     alternates: { canonical: `${site.url}/videos/${video.slug}/` },
@@ -27,6 +28,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WatchPage({ params }: Props) {
   const video = getVideo((await params).slug);
   if (!video) notFound();
+  const yt = youtubeUrl(video);
+  if (yt) {
+    // Static hosting can't send a server redirect, so the page forwards itself.
+    return (
+      <>
+        <meta httpEquiv="refresh" content={`0; url=${yt}`} />
+        <script dangerouslySetInnerHTML={{ __html: `location.replace(${JSON.stringify(yt)})` }} />
+        <div className="wrap py-24 text-center">
+          <p className="text-muted">Opening on YouTube…</p>
+          <a href={yt} className="mt-3 inline-flex h-11 items-center text-sm font-semibold text-brand-ink hover:underline">
+            Watch “{video.title}” on YouTube
+          </a>
+        </div>
+      </>
+    );
+  }
   const related = relatedVideos(video, 8);
 
   const jsonLd = {

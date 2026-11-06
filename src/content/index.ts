@@ -6,6 +6,9 @@ export { videos };
 /** Card-sized image for a video (falls back to the full poster). */
 export const thumbOf = (v: Pick<Video, "poster" | "thumb">) => v.thumb ?? v.poster;
 
+/** YouTube videos open on YouTube; everything else plays on the site. */
+export const youtubeUrl = (v: Pick<Video, "source">) => (v.source.type === "youtube" ? `https://www.youtube.com/watch?v=${v.source.id}` : null);
+
 export const getVideo = (slug: string) => videos.find((v) => v.slug === slug);
 
 /** Most recently published first. */
