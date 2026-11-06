@@ -17,6 +17,7 @@ export function formatDate(iso: string) {
 }
 
 export const formatLabel: Record<VideoFormat, string> = {
+  flat: "Video",
   "360-mono": "360°",
   "360-stereo-tb": "360° 3D",
   "180-stereo-sbs": "180° 3D",

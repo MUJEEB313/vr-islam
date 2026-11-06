@@ -2,7 +2,8 @@ import type { SceneSpec } from "./scene/types";
 
 export type Category = "mosque" | "hajj" | "interior" | "site";
 
-export type VideoFormat = "360-mono" | "360-stereo-tb" | "180-stereo-sbs";
+/** "flat" is a regular (non-360°) video, e.g. a YouTube teaser. */
+export type VideoFormat = "360-mono" | "360-stereo-tb" | "180-stereo-sbs" | "flat";
 
 export type VideoSource =
   /** A real equirectangular video file (mp4/webm/HLS-compatible URL). */

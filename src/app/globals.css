@@ -190,7 +190,7 @@ body {
     aspect-ratio: 16 / 9;
     /* Always the full page width; on wide screens it gets wider rather than
        taller, so it fits below the logo and title. */
-    max-height: max(18rem, calc(100dvh - 17rem));
+    max-height: max(18rem, calc(100dvh - 20rem)); /* room for the logo and a two-line title */
   }
   @media (orientation: portrait) {
     .watch-frame {
@@ -202,6 +202,13 @@ body {
   @media (orientation: portrait) and (min-width: 40rem) {
     .watch-frame {
       aspect-ratio: 4 / 3;
+    }
+  }
+  /* Regular (non-360°) videos keep their own 16:9 shape on every screen. */
+  @media (orientation: portrait) {
+    .watch-frame-flat {
+      aspect-ratio: 16 / 9;
+      max-height: none;
     }
   }
   @media (orientation: landscape) and (max-height: 500px) {

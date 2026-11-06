@@ -22,21 +22,21 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <FooterCol title="Collection">
+        <FooterCol title="Collection" className="lg:max-w-xs">
           <ul className="space-y-3">
             {latestVideos(3).map((v) => (
               <li key={v.slug}>
                 <Link href={`/videos/${v.slug}`} prefetch={false} className="group flex items-center gap-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={asset(thumbOf(v))} alt="" loading="lazy" className="aspect-video w-20 shrink-0 rounded-lg object-cover ring-1 ring-line" />
-                  <span className="text-sm leading-snug text-fg/85 transition group-hover:text-brand-ink">{v.title}</span>
+                  <span className="line-clamp-2 text-sm leading-snug text-fg/85 transition group-hover:text-brand-ink">{v.title}</span>
                 </Link>
               </li>
             ))}
           </ul>
         </FooterCol>
 
-        <FooterCol title="Our initiative">
+        <FooterCol title="Our initiative" className="lg:shrink-0">
           <ul className="space-y-2.5 text-sm text-fg/85">
             {site.initiatives.map(({ name, href }) => (
               <li key={name} className="flex items-center gap-2 break-all">
@@ -61,7 +61,7 @@ export function SiteFooter() {
           </ul>
         </FooterCol>
 
-        <FooterCol title="Contact">
+        <FooterCol title="Contact" className="lg:shrink-0">
           <address className="flex flex-col items-start text-sm not-italic">
             <a href={phoneHref} className="-my-1 inline-flex h-10 items-center gap-2 text-fg/85 transition hover:text-brand-ink">
               <Icon name="call" size={18} className="text-brand" /> {phone}
@@ -92,9 +92,9 @@ export function SiteFooter() {
   );
 }
 
-function FooterCol({ title, children }: { title: string; children: React.ReactNode }) {
+function FooterCol({ title, className = "", children }: { title: string; className?: string; children: React.ReactNode }) {
   return (
-    <div>
+    <div className={className}>
       <h2 className="mb-4 text-xs font-semibold tracking-[0.18em] text-brand-ink uppercase">{title}</h2>
       {children}
     </div>

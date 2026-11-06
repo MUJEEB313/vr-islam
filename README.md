@@ -29,7 +29,7 @@ Every push to `main` is built and published to **GitHub Pages** by `.github/work
 
 ## Adding real videos
 
-All views are listed in `src/content/videos.ts`. The current ones are **placeholders**: 360° scenes generated in the browser (`source.type: "generated"`). To publish real footage, edit an entry:
+All videos are listed in `src/content/videos.ts`. The site currently lists the YouTube teaser for Jannat-ul-Baqi (`source: { type: "youtube", id: "KmqAIfs85J8" }`, `format: "flat"`). To add a 360° file instead, edit or add an entry:
 
 ```ts
 source: { type: "file", src: "https://cdn.example.com/masjid-an-nabawi-8k.mp4" },
