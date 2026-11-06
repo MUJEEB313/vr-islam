@@ -2,6 +2,7 @@ import Link from "next/link";
 import { latestVideos, thumbOf } from "@/content";
 import { asset, site } from "@/lib/site";
 import { VideoLink } from "./Cards";
+import { DownloadAppButton } from "./DownloadApp";
 import { Icon } from "./Icons";
 import { Logo } from "./Logo";
 
@@ -21,6 +22,7 @@ export function SiteFooter() {
             <span className="block">Don&apos;t just learn history.</span>
             <span className="block">Experience it.</span>
           </p>
+          <DownloadAppButton className="mt-5" />
         </div>
 
         <FooterCol title="Collection" className="lg:max-w-xs">
@@ -97,6 +99,10 @@ export function SiteFooter() {
           © {new Date().getFullYear()}{" "}
           <Link href="/" className="transition hover:text-brand-ink hover:underline">
             {site.name}
+          </Link>
+          {" · "}
+          <Link href="/privacy-policy" className="transition hover:text-brand-ink hover:underline">
+            Privacy Policy
           </Link>
         </span>
       </p>
