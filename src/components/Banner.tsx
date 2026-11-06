@@ -16,10 +16,10 @@ export function Banner() {
       <div className="bg-girih pointer-events-none absolute inset-0 opacity-[0.13]" />
       <Skyline />
       <div className="wrap fold-left relative flex flex-col items-center py-[calc((clamp(2.5rem,6vw,4.5rem)*0.725+clamp(1rem,1.8vw,1.5rem)*2)/2)] text-center">
-        <h1 className="font-display leading-[1.05] font-bold tracking-[0.02em] uppercase">
+        <p className="font-display leading-[1.05] font-bold tracking-[0.02em] uppercase">
           <span className="block text-[clamp(1.5rem,1rem+2.6vw,3rem)] text-brand">Experience Islam</span>
           <span className="mt-1 block text-[clamp(1rem,0.75rem+1.4vw,1.85rem)] font-semibold tracking-[0.12em] text-navy">Beyond imagination</span>
-        </h1>
+        </p>
         <div className="mt-3 h-px w-[min(26rem,80%)] bg-gradient-to-r from-transparent via-brand/40 to-transparent" />
         <p className="mt-3 text-[clamp(0.66rem,0.6rem+0.4vw,0.9rem)] font-medium tracking-[0.22em] text-muted uppercase">Relive history through virtual reality</p>
         <ul className="mt-[clamp(1rem,2.5vw,1.5rem)] grid w-full max-w-2xl grid-cols-3 divide-x divide-brand/15">

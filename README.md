@@ -63,6 +63,13 @@ Generated scenes are described by a `SceneSpec` (`src/lib/scene/types.ts`) and d
 npm run dev
 npm run posters                 # all, or: npm run posters <slug> …
 npm run thumbs                  # 800px card thumbnails (-thumb.jpg) for every poster
+node scripts/check-layout.mjs   # layout check on 22 screen sizes and dual-screen foldables
 ```
 
 This uses the local Chrome at `/usr/bin/google-chrome` (override with `CHROME_PATH`) and the dev-only route `/dev/capture?slug=<slug>`, which renders nothing in production builds.
+
+## SEO
+
+- `public/llms.txt` is served at the site root (`/llms.txt`).
+- Home title/description and the WebSite schema markup are set in `src/app/layout.tsx`; the page's H1 and intro text are in `src/app/(site)/page.tsx`.
+- Builds default to `https://vrislam.net` for absolute URLs (sitemap, link previews); GitHub Pages builds override this via `NEXT_PUBLIC_SITE_ORIGIN`.

@@ -7,7 +7,7 @@ export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /** Prefix a root-relative public file path (e.g. "/media/x.jpg") with the base path. */
 export const asset = (path: string) => (path.startsWith("/") ? `${basePath}${path}` : path);
 
-const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://example.com";
+const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://vrislam.net";
 const youtube = "https://www.youtube.com/@vrIslamofficial";
 
 /** Site-wide settings. Rename the site here. */

@@ -7,7 +7,26 @@ export default function HomePage() {
     <>
       <Banner />
 
-      <section id="views" aria-labelledby="views-title" className="wrap mt-[var(--section-gap)] scroll-mt-4">
+      <section aria-labelledby="intro-title" className="wrap fold-left mt-[var(--section-gap)]">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 id="intro-title" className="t-section">
+            Experience Islamic History Through Virtual Reality
+          </h1>
+          <div className="mt-4 space-y-3 leading-relaxed text-muted">
+            <p>
+              Discover a new way to explore Islamic history with VR ISLAM. Through immersive virtual reality experiences and 360° videos, visitors can explore
+              historically significant Islamic places and connect with the rich heritage of Islam.
+            </p>
+            <p>
+              VR ISLAM brings history closer through digital experiences that combine technology, visual storytelling and educational exploration. Whether you
+              are using a VR headset, smartphone or desktop browser, you can discover Islamic heritage from a new perspective.
+            </p>
+            <p className="font-medium text-fg">Don&apos;t just learn about history. Experience it through virtual reality.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="views" aria-labelledby="views-title" className={`wrap mt-[var(--section-gap)] scroll-mt-4${videos.length === 1 ? " fold-left" : ""}`}>
         <h2 id="views-title" className={`t-section mb-6${videos.length === 1 ? " text-center" : ""}`}>
           360° Videos
         </h2>
