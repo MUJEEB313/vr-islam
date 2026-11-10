@@ -1,8 +1,9 @@
 <?php
 /*
  * The videos listed on the site.
- * - YouTube videos ('youtube' => ID) open on YouTube.
- * - Other videos ('file' => URL) play on their own page on this site.
+ * Each video has its own page on this site (/videos/<slug>/).
+ * - YouTube videos ('youtube' => ID) play there through the YouTube player.
+ * - Other videos ('file' => URL) play in a standard video player.
  * Posters live in media/videos/.
  */
 return [

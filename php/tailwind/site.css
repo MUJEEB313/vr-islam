@@ -307,6 +307,12 @@ body {
   .watch-details {
     margin-top: 0;
   }
+  /* A regular 16:9 video stays on the left screen. */
+  .watch-frame-flat {
+    width: var(--seg-l);
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
 }
 
 @media (vertical-viewport-segments: 2) {
@@ -393,4 +399,63 @@ body {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* YouTube player (assets/js/youtube-player.js): thumbnail button until played, then the player, or a message if it fails. */
+.yt-player {
+  position: relative;
+  background: #000;
+}
+.yt-player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.yt-player[data-state="loading"] .yt-start {
+  cursor: progress;
+}
+.yt-player[data-state="loading"] .yt-spinner {
+  display: block;
+}
+.yt-player:not([data-state="loading"]) .yt-spinner {
+  display: none;
+}
+.yt-player[data-state="ready"] .yt-start,
+.yt-player[data-state="playing"] .yt-start {
+  display: none;
+}
+.yt-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: #fff;
+  background: #0a1f44;
+}
+.yt-fallback a,
+.yt-fallback button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 1.25rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.yt-fallback a {
+  background: var(--brand);
+  color: #fff;
+}
+.yt-fallback button {
+  border: 1px solid rgb(255 255 255 / 0.4);
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
 }

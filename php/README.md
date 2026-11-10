@@ -34,7 +34,7 @@ location / { try_files $uri /index.php$is_args$args; }
 | `index.php` | Router: `/`, `/privacy-policy/`, `/videos/<slug>/`, `/embed/<slug>/`, `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest` |
 | `llms.txt`, `brand/`, `icons/`, `media/`, `assets/` | Static files served as-is |
 
-YouTube videos open on YouTube; `/videos/<slug>/` for a YouTube video redirects there.
+Each video has its own page (`/videos/<slug>/`). YouTube videos play there through the official YouTube IFrame Player API (`assets/js/youtube-player.js`): a thumbnail with a play button shows first, and if YouTube can't load or refuses to play, a message with a "Watch on YouTube" link appears instead of a stuck player.
 
 ## Styling
 

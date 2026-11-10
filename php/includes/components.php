@@ -38,13 +38,10 @@ function download_meta(string $class = ''): void
     </p>
 <?php }
 
-/** Opening tag of a link to a video: YouTube videos open YouTube in a new tab, others their page here. */
+/** Opening tag of a link to a video's page on this site. */
 function video_link_open(array $video, string $class): string
 {
-    $yt = youtube_url($video);
-    return $yt
-        ? '<a href="' . e($yt) . '" target="_blank" rel="noopener noreferrer" class="' . e($class) . '">'
-        : '<a href="' . e(url('/videos/' . $video['slug'] . '/')) . '" class="' . e($class) . '">';
+    return '<a href="' . e(url('/videos/' . $video['slug'] . '/')) . '" class="' . e($class) . '">';
 }
 
 /** A video card: poster, duration and title. */

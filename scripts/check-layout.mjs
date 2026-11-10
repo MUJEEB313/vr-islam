@@ -8,7 +8,7 @@
 import { chromium } from "playwright-core";
 
 const base = process.argv[2] ?? "http://localhost:3000";
-const ROUTES = ["/", "/privacy-policy", "/nope"];
+const ROUTES = ["/", "/privacy-policy", "/videos/jannat-al-baqi", "/nope"];
 const DEVICES = [
   ["Galaxy Fold cover", 280, 653, 1], ["iPhone SE (1st)", 320, 568, 1], ["Z Fold cover", 344, 882, 1], ["Android small", 360, 640, 1],
   ["iPhone 14", 390, 844, 1], ["Z Flip / Pixel", 412, 915, 1], ["iPhone Pro Max", 430, 932, 1],

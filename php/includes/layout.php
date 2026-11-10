@@ -10,6 +10,8 @@
  *   og_type      "website" (default) or e.g. "video.other"
  *   noindex      true to keep the page out of search engines
  *   bare         true for chrome-less pages (embed): no header, guide or footer
+ *   head         extra HTML for <head>
+ *   scripts      script paths to load at the end of the page (pass to page_end too)
  */
 
 function page_start(array $meta = []): void
@@ -34,6 +36,8 @@ function page_start(array $meta = []): void
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#ffffff">
+    <!-- Sends the site's address to embedded players; YouTube refuses to play embeds without it (error 153). -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title><?= e($title) ?></title>
     <meta name="description" content="<?= e($description) ?>">
     <?php if (!empty($meta['noindex'])) { ?><meta name="robots" content="noindex"><?php } ?>
@@ -79,6 +83,9 @@ function page_end(array $meta = []): void
         <?php ways_to_watch() ?>
     </main>
     <?php site_footer() ?>
+<?php }
+    foreach ($meta['scripts'] ?? [] as $src) { ?>
+    <script src="<?= e(url($src)) ?>?v=<?= @filemtime(__DIR__ . '/..' . $src) ?>" defer></script>
 <?php } ?>
 </body>
 </html>
