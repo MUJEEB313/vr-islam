@@ -13,6 +13,10 @@ npm run build      # static export to ./out (plain HTML/CSS/JS, host anywhere)
 npx serve out      # preview the production build
 ```
 
+## PHP version
+
+A plain-PHP copy of the site lives in `php/` (no build step needed to run it). See [`php/README.md`](php/README.md).
+
 ## Deployment
 
 Every push to `main` is built and published to **GitHub Pages** by `.github/workflows/deploy.yml`. The workflow sets `NEXT_PUBLIC_BASE_PATH` (e.g. `/vr-islam`) and `NEXT_PUBLIC_SITE_ORIGIN` automatically from the repository's Pages settings. With a custom domain the base path becomes empty and nothing else needs to change.

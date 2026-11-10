@@ -1,0 +1,396 @@
+/*
+ * Stylesheet source for the PHP site. Compile with:  npm run php:css   (from the project root)
+ * Tailwind scans the PHP templates in this folder for the classes they use.
+ */
+@import "tailwindcss" source(none);
+@source "../**/*.php";
+
+/* Self-hosted fonts (Inter, Sora, Amiri). */
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/ba9851c3c22cd980-s.woff2") format("woff2");unicode-range:u+0460-052f,u+1c80-1c8a,u+20b4,u+2de0-2dff,u+a640-a69f,u+fe2e-fe2f}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/21350d82a1f187e9-s.woff2") format("woff2");unicode-range:u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/c5fe6dc8356a8c31-s.woff2") format("woff2");unicode-range:u+1f??}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/19cfc7226ec3afaa-s.woff2") format("woff2");unicode-range:u+0370-0377,u+037a-037f,u+0384-038a,u+038c,u+038e-03a1,u+03a3-03ff}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/df0a9ae256c0569c-s.woff2") format("woff2");unicode-range:u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+0300-0301,u+0303-0304,u+0308-0309,u+0323,u+0329,u+1ea0-1ef9,u+20ab}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/8e9860b6e62d6359-s.woff2") format("woff2");unicode-range:u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c4,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/e4af272ccee01ff0-s.p.woff2") format("woff2");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+@font-face{font-family:Inter Fallback;src:local("Arial");ascent-override:90.44%;descent-override:22.52%;line-gap-override:0.00%;size-adjust:107.12%}
+@font-face{font-family:Sora;font-style:normal;font-weight:600;font-display:swap;src:url("../fonts/914260237fc68abf-s.woff2") format("woff2");unicode-range:u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c4,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-family:Sora;font-style:normal;font-weight:600;font-display:swap;src:url("../fonts/0c622b6f37b8ee47-s.p.woff2") format("woff2");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+@font-face{font-family:Sora Fallback;src:local("Arial");ascent-override:85.29%;descent-override:25.50%;line-gap-override:0.00%;size-adjust:113.73%}
+@font-face{font-family:Amiri;font-style:normal;font-weight:400;font-display:swap;src:url("../fonts/5aae3a1c1074c5e1-s.p.woff2") format("woff2");unicode-range:u+06??,u+0750-077f,u+0870-0891,u+0897-08e1,u+08e3-08ff,u+200c-200e,u+2010-2011,u+204f,u+2e41,u+fb50-fdff,u+fe70-fe74,u+fe76-fefc,u+102e0-102fb,u+10e60-10e7e,u+10ec2-10ec7,u+10ec9-10eee,u+10ef?,u+1ee00-1ee03,u+1ee05-1ee1f,u+1ee21-1ee22,u+1ee24,u+1ee27,u+1ee29-1ee32,u+1ee34-1ee37,u+1ee39,u+1ee3b,u+1ee42,u+1ee47,u+1ee49,u+1ee4b,u+1ee4d-1ee4f,u+1ee51-1ee52,u+1ee54,u+1ee57,u+1ee59,u+1ee5b,u+1ee5d,u+1ee5f,u+1ee61-1ee62,u+1ee64,u+1ee67-1ee6a,u+1ee6c-1ee72,u+1ee74-1ee77,u+1ee79-1ee7c,u+1ee7e,u+1ee80-1ee89,u+1ee8b-1ee9b,u+1eea1-1eea3,u+1eea5-1eea9,u+1eeab-1eebb,u+1eef0-1eef1}
+@font-face{font-family:Amiri;font-style:normal;font-weight:400;font-display:swap;src:url("../fonts/ecb0c194634e5a7f-s.woff2") format("woff2");unicode-range:u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c4,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-family:Amiri;font-style:normal;font-weight:400;font-display:swap;src:url("../fonts/8c2fd50d66d22a18-s.woff2") format("woff2");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+@font-face{font-family:Amiri Fallback;src:local("Times New Roman");ascent-override:112.47%;descent-override:63.44%;line-gap-override:0.00%;size-adjust:99.94%}
+
+:root {
+  --font-inter: "Inter", "Inter Fallback";
+  --font-sora: "Sora", "Sora Fallback";
+  --font-amiri: "Amiri", "Amiri Fallback";
+}
+
+
+/* Phones on their side: little height, so chrome and copy compress. */
+@custom-variant short (@media (orientation: landscape) and (max-height: 500px));
+/* Foldables and dual screens, side by side (book) or stacked (laptop / flex mode). */
+@custom-variant fold-h (@media (horizontal-viewport-segments: 2));
+@custom-variant fold-v (@media (vertical-viewport-segments: 2));
+
+@theme {
+  --breakpoint-xs: 20rem;
+}
+
+/* Light theme; colours are sampled from the VR Islam logo. */
+:root {
+  --bg: #f6f9fd;
+  --surface: #ffffff;
+  --surface-2: #eaf1fb;
+  --surface-3: #dbe7f8;
+  --border: rgb(4 58 122 / 0.12);
+  --border-strong: rgb(4 58 122 / 0.24);
+  --text: #0a1f44;
+  --muted: #4f6385;
+  /* Button fills; white text on these stays above 4.4:1. */
+  --brand: #0172ce;
+  --brand-strong: #0164b6;
+  /* Accent text and icons on the page background. */
+  --brand-ink: #0b5ab0;
+  /* Accent on top of imagery and video. */
+  --brand-bright: #5cbbff;
+  --navy: #00193f;
+  color-scheme: light;
+
+  /* Height of the logo header (logo + padding + border), for layouts that must fit beneath it. */
+  --header-h: calc(4rem + 1.5rem + 1px);
+
+  /* Vertical space between page sections. */
+  --section-gap: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+
+  /* Page side padding; respects notches when a phone is on its side. */
+  --gutter: max(1rem, env(safe-area-inset-left), env(safe-area-inset-right));
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --gutter: max(1.5rem, env(safe-area-inset-left), env(safe-area-inset-right));
+    --header-h: calc(5rem + 1.5rem + 1px);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-fg: var(--text);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-bright: var(--brand-bright);
+  --color-navy: var(--navy);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-arabic: var(--font-amiri), "Noto Naskh Arabic", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Large monitors and TVs: scale everything up, limited by height so ultrawides don't balloon. */
+@media (min-width: 120rem) {
+  html {
+    font-size: clamp(16px, min(0.55vw + 5.5px, 1.111vh), 24px);
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand-bright) 35%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+}
+
+/* Eight-pointed star (khatam) lattice used as a quiet background texture. */
+.bg-girih {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%230172ce' stroke-width='1'%3E%3Cpath d='M32 10 38.5 25.5 54 32 38.5 38.5 32 54 25.5 38.5 10 32 25.5 25.5Z'/%3E%3Crect x='19' y='19' width='26' height='26' transform='rotate(45 32 32)'/%3E%3Crect x='19' y='19' width='26' height='26'/%3E%3Cpath d='M0 0 10 10M64 0 54 10M0 64 10 54M64 64 54 54'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 64px 64px;
+}
+
+@layer components {
+  /* RTL text that still sits on the page's left edge unless a utility (e.g. text-center) says otherwise. */
+  .arabic {
+    font-family: var(--font-arabic);
+    direction: rtl;
+    text-align: left;
+  }
+
+  /* Fluid type: scales with the screen between hard limits. */
+  .t-banner {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.35rem, 1rem + 1.9vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .t-page {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 1.25rem + 1.4vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .t-section {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.95rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .t-card {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
+    line-height: 1.25;
+  }
+
+  /* Page container. */
+  .wrap {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .wrap-wide {
+    width: 100%;
+    max-width: 100rem;
+    margin-inline: auto;
+    padding-inline: 0.5rem;
+  }
+  @media (min-width: 120rem) {
+    .wrap {
+      max-width: 96rem;
+    }
+  }
+  @media (min-width: 150rem) {
+    .wrap,
+    .wrap-wide {
+      max-width: 88vw;
+    }
+  }
+
+  /* Grids that pick their own column count, so every width gets a sensible layout. */
+  .grid-cards {
+    display: grid;
+    gap: 2rem 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  }
+  .grid-split {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  }
+  .grid-list {
+    display: grid;
+    gap: 1rem 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  }
+
+  /* Watch page player: tall on portrait screens, widescreen otherwise, always fully on screen. */
+  .watch-frame {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    /* Always the full page width; on wide screens it gets wider rather than
+       taller, so it fits below the logo and title. */
+    max-height: max(18rem, calc(100dvh - 20rem)); /* room for the logo and a two-line title */
+  }
+  @media (orientation: portrait) {
+    .watch-frame {
+      aspect-ratio: 1 / 1;
+      /* Small phones: shorter, so the logo, title and player all fit on screen. */
+      max-height: max(15rem, min(60dvh, calc(100dvh - 19rem)));
+    }
+  }
+  @media (orientation: portrait) and (min-width: 40rem) {
+    .watch-frame {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  /* Regular (non-360°) videos keep their own 16:9 shape on every screen. */
+  @media (orientation: portrait) {
+    .watch-frame-flat {
+      aspect-ratio: 16 / 9;
+      max-height: none;
+    }
+  }
+  @media (orientation: landscape) and (max-height: 500px) {
+    .watch-frame {
+      /* Too short for header, title and player at once: fills the screen once scrolled to. */
+      max-height: 100dvh;
+    }
+  }
+}
+
+/*
+ * Foldables and dual screens. Each segment is treated as its own screen, so
+ * nothing important lands on the hinge. Unfolded flat, a foldable reports one
+ * segment and simply gets the normal layout for its width.
+ */
+@media (horizontal-viewport-segments: 2) {
+  :root {
+    --seg-l: env(viewport-segment-width 0 0);
+    --seg-r: env(viewport-segment-width 1 0);
+    --hinge: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0));
+  }
+  .wrap,
+  .wrap-wide {
+    max-width: none;
+  }
+  .grid-cards,
+  .grid-split {
+    grid-template-columns: calc(var(--seg-l) - var(--gutter) * 2) calc(var(--seg-r) - var(--gutter) * 2);
+    column-gap: calc(var(--hinge) + var(--gutter) * 2);
+  }
+  /* Centred blocks (logo, banner, titles) sit on the left screen instead of across the hinge. */
+  .fold-left {
+    max-width: var(--seg-l);
+    margin-left: 0;
+    margin-right: auto;
+  }
+  /* Two-part areas put one part on each screen. */
+  .fold-cols {
+    display: grid;
+    grid-template-columns: calc(var(--seg-l) - var(--gutter) * 2) calc(var(--seg-r) - var(--gutter) * 2);
+    column-gap: calc(var(--hinge) + var(--gutter) * 2);
+  }
+  /* A boxed section loses its frame so the box doesn't span the hinge. */
+  .fold-flat {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+  /* Watch: player on one screen, details on the other. */
+  .watch {
+    display: grid;
+    grid-template-columns: var(--seg-l) var(--seg-r);
+    column-gap: var(--hinge);
+    align-items: start;
+  }
+  .watch-stage {
+    position: sticky;
+    top: 0;
+  }
+  .watch-frame {
+    aspect-ratio: auto;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+  }
+  .watch-details {
+    margin-top: 0;
+  }
+}
+
+@media (vertical-viewport-segments: 2) {
+  :root {
+    --seg-top: env(viewport-segment-height 0 0);
+    --hinge-y: calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0));
+  }
+  /* Laptop posture: the player fills the top screen under the logo; title and details start below the fold. */
+  .watch-page {
+    display: flex;
+    flex-direction: column;
+  }
+  .watch {
+    display: contents;
+  }
+  .watch-stage {
+    order: 1;
+    margin-bottom: var(--hinge-y);
+  }
+  .watch-title {
+    order: 2;
+  }
+  .watch-details {
+    order: 3;
+  }
+  .watch-frame {
+    aspect-ratio: auto;
+    height: calc(var(--seg-top) - var(--header-h));
+    max-height: none;
+  }
+}
+
+/* Player range inputs */
+.player-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(to right, var(--brand-bright) var(--progress, 0%), rgb(255 255 255 / 0.25) var(--progress, 0%));
+  transition: height 0.15s;
+}
+.player-range:hover {
+  height: 6px;
+}
+.player-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgb(0 142 241 / 0.4);
+}
+.player-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Touch screens: bigger seek bar and thumb. */
+@media (pointer: coarse) {
+  .player-range {
+    height: 6px;
+  }
+  .player-range::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+  }
+  .player-range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

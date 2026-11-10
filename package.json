@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "posters": "node scripts/render-posters.mjs",
-    "thumbs": "node scripts/make-thumbs.mjs"
+    "thumbs": "node scripts/make-thumbs.mjs",
+    "php:css": "tailwindcss -i php/tailwind/site.css -o php/assets/css/site.css --minify"
   },
   "dependencies": {
     "next": "^15.5.28",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@tailwindcss/cli": "^4.3.3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
